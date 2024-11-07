@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Character.jpg-e8f0ad4d818ed4f3eb2169b9f4fc0f44.s3tc.stex"
-path.etc="res://.import/Character.jpg-e8f0ad4d818ed4f3eb2169b9f4fc0f44.etc.stex"
+path.s3tc="res://.import/Afrikan Tähti.jpg-73964b8e7bdea842aeaae5c989d1ef3d.s3tc.stex"
+path.etc="res://.import/Afrikan Tähti.jpg-73964b8e7bdea842aeaae5c989d1ef3d.etc.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Graphics/Character.jpg"
-dest_files=[ "res://.import/Character.jpg-e8f0ad4d818ed4f3eb2169b9f4fc0f44.s3tc.stex", "res://.import/Character.jpg-e8f0ad4d818ed4f3eb2169b9f4fc0f44.etc.stex" ]
+source_file="res://Graphics/Afrikan Tähti.jpg"
+dest_files=[ "res://.import/Afrikan Tähti.jpg-73964b8e7bdea842aeaae5c989d1ef3d.s3tc.stex", "res://.import/Afrikan Tähti.jpg-73964b8e7bdea842aeaae5c989d1ef3d.etc.stex" ]
 
 [params]
 
