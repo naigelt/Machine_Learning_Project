@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="CylinderShape" id=1]
+
+[node name="RoadPoint" type="Spatial"]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0, 0, 0 )
+
+[node name="RigidBody" type="RigidBody" parent="."]
+gravity_scale = 0.0
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody"]
+shape = SubResource( 1 )
+
+[node name="CSGCylinder" type="CSGCylinder" parent="RigidBody/CollisionShape"]
+sides = 16
