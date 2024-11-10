@@ -30,103 +30,6 @@ gravity_scale = 0.0
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance/RigidBody"]
 shape = SubResource( 3 )
 
-[node name="Cities_w" type="Node" parent="."]
-
-[node name="Cairo" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.90889, 0.793472, -22.8652 )
-
-[node name="Egypt" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.90889, 0.793472, -14.8652 )
-
-[node name="Tripoli" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09111, 0.793472, -22.8652 )
-
-[node name="Tunis" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.09111, 0.793472, -26.8652 )
-
-[node name="Tangria" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4911, 0.793472, -28.3652 )
-
-[node name="Canary Islands" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0911, 0.793472, -23.8652 )
-
-[node name="ST Helena" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.0911, 0.793472, 13.1348 )
-
-[node name="Marocco" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.0911, 0.793472, -22.8652 )
-
-[node name="Sahara" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09111, 0.793472, -17.8652 )
-
-[node name="Cape Verge" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.0911, 0.793472, -11.8652 )
-
-[node name="Ain-Galaka" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.09111, 0.793472, -10.8652 )
-
-[node name="Suakin" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9089, 0.793472, -11.8652 )
-
-[node name="Addis Abeba" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9089, 0.793472, -3.86523 )
-
-[node name="Cape Guardafui" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.9089, 0.793472, -5.86523 )
-
-[node name="Dar -Fur" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.90889, 0.793472, -7.86523 )
-
-[node name="Bahr EL Ghasal" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.90889, 0.793472, -2.86523 )
-
-[node name="Lake-Victoria" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.9089, 0.793472, 1.13477 )
-
-[node name="Daressalam" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9089, 0.793472, 6.13477 )
-
-[node name="Mozambique" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.9089, 0.793472, 14.1348 )
-
-[node name="Whale Fish" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.09111, 0.793472, 20.1348 )
-
-[node name="Victoria Falls" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.90889, 0.793472, 17.1348 )
-
-[node name="Dragon Mountain" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.90889, 0.793472, 22.1348 )
-
-[node name="Tamatave" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.9089, 0.793472, 16.1348 )
-
-[node name="Cape STMarie" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9089, 0.793472, 24.1348 )
-
-[node name="Cape GuarDafui" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.9089, 0.793472, -5.86523 )
-
-[node name="Sierra Leone" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0911, 0.793472, -5.86523 )
-
-[node name="Goald Coast" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.0911, 0.793472, -2.86523 )
-
-[node name="Cape Town" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.091114, 0.793472, 30.1348 )
-
-[node name="Slave Coast" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09111, 0.793472, -2.86523 )
-
-[node name="Kandjama" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.09111, 0.793472, -2.86523 )
-
-[node name="Congo" type="Position3D" parent="Cities_w"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.09111, 0.793472, 9.13477 )
-
-[node name="Path" type="Node" parent="Cities_w"]
-
 [node name="Cities" type="Node" parent="."]
 
 [node name="Tangier" parent="Cities" instance=ExtResource( 4 )]
@@ -376,6 +279,15 @@ transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 13.3937, 0, -9.8389 )
 
 [node name="RoadPoint38" parent="Roads" instance=ExtResource( 6 )]
 transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.39373, 0, -10.8389 )
+
+[node name="RoadPoint107" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.6586, 0, -17.4258 )
+
+[node name="RoadPoint108" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.11024, 0, -18.8909 )
+
+[node name="RoadPoint109" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3825, 0, -20.0038 )
 
 [node name="RoadPoint39" parent="Roads" instance=ExtResource( 6 )]
 transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0, -11.8389 )
