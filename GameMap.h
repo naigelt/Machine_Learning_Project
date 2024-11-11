@@ -1,6 +1,6 @@
 // GameMap.h
 #pragma once
 
-class GameEngine;  // Forward declaration of GameEngine
+class GameEngine;
 
 void loadGameMap(GameEngine& gameEngine);

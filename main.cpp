@@ -7,13 +7,14 @@
 #include <ctime>
 #include <queue>
 #include <set>
-#include "GameMap.h"  // Sisällytä GameMap.h
+#include "GameMap.h" 
 #include "GameEngine.h"
 
 GameEngine::GameEngine() : rng(std::random_device{}()), diceDist(1, 6), currentPlayerIndex(0), hasAfricanStar(false) {
     loadMap();  // Load the game map before assigning disks
 
-    // Define the actual disks (no 'Empty' disks here)
+    
+ 
     static std::vector<Disk> disks = {
         {DiskType::StarOfAfrica, 0},
         {DiskType::Horseshoe, 0},
@@ -33,12 +34,12 @@ GameEngine::GameEngine() : rng(std::random_device{}()), diceDist(1, 6), currentP
             city.disk = &disks[diskIndex];
             diskIndex++;
         } else {
-            city.disk = nullptr;  // Cities without disks are truly empty
+            city.disk = nullptr;
         }
     }
 
-    players.push_back(Player{100});  // Player 1 starts at Start1
-    players.push_back(Player{100});  // Player 2 starts at Start1
+    players.push_back(Player{100}); 
+    players.push_back(Player{100}); 
 
     // Display assigned disks for debugging
     std::cout << "Assigned disks to cities:" << std::endl;
@@ -73,11 +74,12 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
     std::cout << "With a roll of " << diceRoll << ", you can reach the following nodes:" << std::endl;
     for (size_t i = 0; i < reachableNodes.size(); ++i) {
         int nodeId = reachableNodes[i];
+        bool isWaterway = waterways.count({player.currentNodeId, nodeId}) > 0;  // Check if the connection is a waterway
         std::cout << i + 1 << ". Node " << nodeId;
         if (isCityNode(nodeId)) {
             std::cout << " (City: " << getCityName(nodeId) << ")";
         }
-        std::cout << std::endl;
+        std::cout << " [" << (isWaterway ? "Water" : "Land") << "]" << std::endl;  // Indicate if it’s a waterway
     }
 
     int choice;
@@ -85,7 +87,22 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
     std::cin >> choice;
 
     if (choice > 0 && choice <= reachableNodes.size()) {
-        player.currentNodeId = reachableNodes[choice - 1];
+        int selectedDestination = reachableNodes[choice - 1];
+        bool isWaterway = waterways.count({player.currentNodeId, selectedDestination}) > 0;
+
+        // Check if the route is a waterway and if the player can afford it
+        if (isWaterway) {
+            if (player.money >= 100) {
+                player.money -= 100;
+                std::cout << "Paid £100 to use the water route. Remaining balance: £" << player.money << "\n";
+            } else {
+                std::cout << "Not enough money to use the water route. Turn skipped." << std::endl;
+                return;  // Exit without moving
+            }
+        }
+
+        // Update player's position
+        player.currentNodeId = selectedDestination;
         if (isCityNode(player.currentNodeId)) {
             City& city = cities[getCityName(player.currentNodeId)];
             std::cout << "Player reached city: " << city.name << std::endl;
@@ -96,9 +113,16 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
 
                 while (!diskOpened) {
                     std::cout << "There is a disk here. You can either:\n";
-                    std::cout << "1. Pay £100 to open the disk\n";
-                    std::cout << "2. Wait and try to open the disk with a roll of 4, 5, or 6\n";
-                    std::cout << "Choose an option (1 or 2): ";
+                    if (player.money >= 100) {
+                        std::cout << "1. Pay £100 to open the disk\n";
+                        std::cout << "2. Wait and try to open the disk with a roll of 4, 5, or 6\n";
+                        std::cout << "Choose an option (1 or 2): ";
+                    } else {
+                        std::cout << "You don't have enough money (£100 required) to open the disk by paying.\n";
+                        std::cout << "You can only wait and try to open the disk with a roll of 4, 5, or 6.\n";
+                        std::cout << "Press 2 to continue: ";
+                    }
+
                     int option;
                     std::cin >> option;
 
@@ -141,6 +165,7 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
         std::cout << "Invalid choice. No movement this turn." << std::endl;
     }
 }
+
 
 
 std::vector<int> GameEngine::getReachableNodes(int startNode, int steps) {
@@ -211,6 +236,12 @@ void GameEngine::addConnection(int node1, int node2) {
     nodes[node2].neighbors.push_back(node1);
 }
 
+void GameEngine::addWaterway(int node1, int node2) {
+    waterways.insert({node1, node2});
+    waterways.insert({node2, node1});  // Ensure it's bidirectional
+}
+
+
 void GameEngine::loadMap() {
     loadGameMap(*this);
 }
@@ -233,15 +264,15 @@ void GameEngine::revealDisk(const Disk& disk, Player& player) {
             player.money = 0;
             break;
         case DiskType::Topaz:
-            std::cout << "You found a Topaz! It’s worth £300." << std::endl;
+            std::cout << "You found a Topaz! It is worth 300." << std::endl;
             player.money += 300;
             break;
         case DiskType::Emerald:
-            std::cout << "You found an Emerald! It’s worth £600." << std::endl;
+            std::cout << "You found an Emerald! It is worth 600." << std::endl;
             player.money += 600;
             break;
         case DiskType::Ruby:
-            std::cout << "You found a Ruby! It’s worth £1000." << std::endl;
+            std::cout << "You found a Ruby! It is worth 1000." << std::endl;
             player.money += 1000;
             break;
         case DiskType::StarOfAfrica:
@@ -271,7 +302,6 @@ int main() {
     GameEngine game;
 
     while (true) {
-        // Hae nykyinen pelaaja `getCurrentPlayer`-funktion avulla
         Player& currentPlayer = game.getCurrentPlayer();
 
         std::cout << "\nPlayer " << (game.getCurrentPlayerIndex() + 1) << "'s turn." << std::endl;
@@ -281,7 +311,6 @@ int main() {
 
         game.movePlayer(currentPlayer, diceRoll);
 
-        // Vaihda vuoro seuraavalle pelaajalle
         game.nextTurn();
     }
 

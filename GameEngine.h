@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include <random>
+#include <set>
 
 enum class DiskType {
     Empty,
@@ -46,6 +47,8 @@ public:
     int rollDice();
     void movePlayer(Player& player, int diceRoll);
     void loadMap();  // Lataa kartta
+    void addWaterway(int node1, int node2);
+    
 
     void revealDisk(const Disk& disk, Player& player);  // Julistus kiekon paljastamiseksi
 
@@ -60,6 +63,7 @@ private:
     std::unordered_map<std::string, City> cities;
     std::mt19937 rng;
     std::uniform_int_distribution<int> diceDist;
+    std::set<std::pair<int, int>> waterways;  // Set of waterway connections
     
     std::vector<Player> players;  // Pelaajien lista
     int currentPlayerIndex;  // Kenen vuoro on
