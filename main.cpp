@@ -72,15 +72,107 @@ int GameEngine::rollDice() {
     return diceDist(rng);
 }
 
-void GameEngine::movePlayer(Player& player, int diceRoll) {
-    std::vector<int> reachableNodes = getReachableNodes(player.currentNodeId, diceRoll);
+void GameEngine::interactWithDisk(Player& player, City& city) {
+    if (city.disk == nullptr) {
+        std::cout << "No disk to open here.\n";
+        return;
+    }
 
+    bool diskOpened = false;
+    while (!diskOpened) {
+        std::cout << "There is a disk here. You can either:\n";
+        if (player.money >= 100) {
+            std::cout << "1. Pay £100 to open the disk\n";
+            std::cout << "2. Wait and try to open the disk with a roll of 4, 5, or 6\n";
+            std::cout << "Choose an option (1 or 2): ";
+        } else {
+            std::cout << "You don't have enough money (£100 required) to open the disk by paying.\n";
+            std::cout << "You can only wait and try to open the disk with a roll of 4, 5, or 6.\n";
+            std::cout << "Press 2 to continue: ";
+        }
+
+        int option;
+        std::cin >> option;
+
+        if (option == 1 && player.money >= 100) {
+            player.money -= 100;
+            revealDisk(*city.disk, player);
+            city.disk = nullptr;  // Remove the disk from the city
+            diskOpened = true;
+            player.pendingDisk = false;  // Clear pending flag
+        } else if (option == 2) {
+            int attemptRoll = rollDice();
+            std::cout << "You rolled a " << attemptRoll << "." << std::endl;
+            if (attemptRoll >= 4) {
+                revealDisk(*city.disk, player);
+                city.disk = nullptr;  // Remove the disk from the city
+                diskOpened = true;
+                player.pendingDisk = false;  // Clear pending flag
+            } else {
+                std::cout << "The roll was not enough to open the disk. Try again on your next turn.\n";
+                player.pendingDisk = true;  // Set pending flag
+                break;  // Exit without opening the disk
+            }
+        } else {
+            std::cout << "Invalid option or insufficient funds. Try again.\n";
+        }
+    }
+}
+
+
+
+
+
+// Helper function to check the winning condition
+void GameEngine::checkWinningCondition(const Player& player, const City& city) const {
+    if (player.hasAfricanStar && (city.name == "Tangier" || city.name == "Cairo")) {
+        std::cout << "Player with the African Star reached " << city.name << " and wins the game!" << std::endl;
+        exit(0);
+    } else if (player.hasHorseshoe && hasAfricanStar && (city.name == "Tangier" || city.name == "Cairo")) {
+        std::cout << "Player with the horseshoe reached " << city.name << " and wins the game!" << std::endl;
+        exit(0);
+    }
+}
+
+int GameEngine::handleWaterwayCost(Player& player, const std::vector<int>& path) {
+    bool usedWaterRoute = false;
+    for (size_t i = 1; i < path.size(); ++i) {
+        if (waterways.count({path[i - 1], path[i]}) > 0) {
+            usedWaterRoute = true;
+            break;
+        }
+    }
+
+    if (usedWaterRoute) {
+        if (player.money >= 100) {
+            player.money -= 100;
+            std::cout << "Paid £100 to use the water route. Remaining balance: £" << player.money << "\n";
+            player.isOnWater = true;
+            return path.size();  // Full path
+        } else {
+            int roll = rollDice();
+            std::cout << "You don't have enough money. Rolled a " << roll << "." << std::endl;
+            if (roll >= 2) {
+                std::cout << "You can travel 2 nodes.\n";
+                player.isOnWater = true;
+                return 2;  // Limit to 2 nodes
+            } else {
+                std::cout << "You rolled a 1 and cannot move this turn.\n";
+                return 0;  // No movement
+            }
+        }
+    }
+    return path.size();  // Full path if no waterway or sufficient funds
+}
+
+
+
+// Helper function to display reachable nodes
+void GameEngine::displayReachableNodes(int diceRoll, const std::vector<int>& reachableNodes) const {
     std::cout << "With a roll of " << diceRoll << ", you can reach the following nodes:" << std::endl;
     for (size_t i = 0; i < reachableNodes.size(); ++i) {
         int nodeId = reachableNodes[i];
-        
-        // Determine if the destination is a waterway or land route
-        bool isWaterway = (nodeId >= 200 && nodeId <= 276) || waterways.count({player.currentNodeId, nodeId}) > 0;
+        bool isWaterway = (nodeId >= 200 && nodeId <= 276) || waterways.count({reachableNodes[0], nodeId}) > 0;
 
         std::cout << i + 1 << ". Node " << nodeId;
         if (isCityNode(nodeId)) {
@@ -88,6 +180,22 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
         }
         std::cout << " [" << (isWaterway ? "Water" : "Land") << "]" << std::endl;
     }
+}
+
+void GameEngine::movePlayer(Player& player, int diceRoll) {
+    // Check if player has a pending disk interaction
+    if (player.pendingDisk) {
+        City& city = cities[getCityName(player.currentNodeId)];
+        interactWithDisk(player, city);
+        if (player.pendingDisk) {
+            // If interaction is still pending, end turn without movement
+            std::cout << "Ending turn as the player still needs to open the disk.\n";
+            return;
+        }
+    }
+
+    std::vector<int> reachableNodes = getReachableNodes(player.currentNodeId, diceRoll);
+    displayReachableNodes(diceRoll, reachableNodes);
 
     int choice;
     std::cout << "Choose your destination (1-" << reachableNodes.size() << "): ";
@@ -95,91 +203,19 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
 
     if (choice > 0 && choice <= reachableNodes.size()) {
         int selectedDestination = reachableNodes[choice - 1];
-        
-        // Determine the path taken from the starting node to the destination
         std::vector<int> path = getPathToNode(player.currentNodeId, selectedDestination, diceRoll);
 
-        // Check if the path includes any waterway nodes
-        bool usedWaterRoute = false;
-        for (size_t i = 1; i < path.size(); ++i) {
-            if (waterways.count({path[i-1], path[i]}) > 0) {
-                usedWaterRoute = true;
-                break;
-            }
+        if (!handleWaterwayCost(player, path)) {
+            return;  // Skip turn if player can't move due to waterway rule
         }
 
-        // Deduct £100 if the player used a water route
-        if (usedWaterRoute && !player.isOnWater) {
-            if (player.money >= 100) {
-                player.money -= 100;
-                std::cout << "Paid £100 to use the water route. Remaining balance: £" << player.money << "\n";
-                player.isOnWater = true;  // Mark player as being on water
-            } else {
-                std::cout << "Not enough money to enter the waterway. Turn skipped." << std::endl;
-                return;  // Exit without moving
-            }
-        } else if (!usedWaterRoute) {
-            // Reset `isOnWater` if the player is not using a water route
-            player.isOnWater = false;
-        }
-
-        // Update player's position
         player.currentNodeId = selectedDestination;
+
         if (isCityNode(player.currentNodeId)) {
             City& city = cities[getCityName(player.currentNodeId)];
             std::cout << "Player reached city: " << city.name << std::endl;
-
-            // Check if the city has a disk and let the player interact with it
-            if (city.disk != nullptr) {
-                bool diskOpened = false;
-
-                while (!diskOpened) {
-                    std::cout << "There is a disk here. You can either:\n";
-                    if (player.money >= 100) {
-                        std::cout << "1. Pay £100 to open the disk\n";
-                        std::cout << "2. Wait and try to open the disk with a roll of 4, 5, or 6\n";
-                        std::cout << "Choose an option (1 or 2): ";
-                    } else {
-                        std::cout << "You don't have enough money (£100 required) to open the disk by paying.\n";
-                        std::cout << "You can only wait and try to open the disk with a roll of 4, 5, or 6.\n";
-                        std::cout << "Press 2 to continue: ";
-                    }
-
-                    int option;
-                    std::cin >> option;
-
-                    if (option == 1 && player.money >= 100) {
-                        player.money -= 100;
-                        revealDisk(*city.disk, player);
-                        city.disk = nullptr;  // Remove the disk from the city
-                        diskOpened = true;
-                    } else if (option == 2) {
-                        int attemptRoll = rollDice();
-                        std::cout << "You rolled a " << attemptRoll << "." << std::endl;
-                        if (attemptRoll >= 4) {
-                            revealDisk(*city.disk, player);
-                            city.disk = nullptr;  // Remove the disk from the city
-                            diskOpened = true;
-                        } else {
-                            std::cout << "The roll was not enough to open the disk. Try again on your next turn.\n";
-                            break;  // Player must wait until next turn
-                        }
-                    } else {
-                        std::cout << "Invalid option or insufficient funds. Try again.\n";
-                    }
-                }
-            } else {
-                std::cout << "No disk to open here.\n";
-            }
-
-            // Check for winning condition
-            if (player.hasAfricanStar && (city.name == "Tangier" || city.name == "Cairo")) {
-                std::cout << "Player with the African Star reached " << city.name << " and wins the game!" << std::endl;
-                exit(0);
-            } else if (player.hasHorseshoe && hasAfricanStar && (city.name == "Tangier" || city.name == "Cairo")) {
-                std::cout << "Player with the horseshoe reached " << city.name << " and wins the game!" << std::endl;
-                exit(0);
-            }
+            interactWithDisk(player, city);
+            checkWinningCondition(player, city);
         } else {
             std::cout << "Player moved to node " << player.currentNodeId << std::endl;
         }
@@ -187,6 +223,9 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
         std::cout << "Invalid choice. No movement this turn." << std::endl;
     }
 }
+
+
+
 
 
 std::vector<int> GameEngine::getReachableNodes(int startNode, int steps) {
@@ -376,7 +415,7 @@ void GameEngine::revealDisk(const Disk& disk, Player& player) {
             hasAfricanStar = true;
             break;
     }
-    std::cout << "Player's new balance: £" << player.money << std::endl;
+    std::cout << "Player's new balance: " << player.money << std::endl;
 }
 
 Player& GameEngine::getCurrentPlayer() {
