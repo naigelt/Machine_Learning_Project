@@ -4,7 +4,6 @@
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/MainCamera.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/City.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/Player.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/RoadPoint.tscn" type="PackedScene" id=6]
 
 [sub_resource type="PlaneMesh" id=1]
@@ -15,6 +14,8 @@ albedo_texture = ExtResource( 1 )
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 1, 0.1, 1 )
+
+[sub_resource type="CapsuleMesh" id=4]
 
 [node name="GameBoard" type="Spatial"]
 
@@ -33,429 +34,435 @@ shape = SubResource( 3 )
 [node name="Cities" type="Node" parent="."]
 
 [node name="Tangier" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1215, 0, -27.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1215, 0.1, -27.4005 )
 
 [node name="Cape Guardafui" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.0146, 0, -5.68104 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 25.8697, 0.1, -5.68104 )
 
 [node name="Tripoli" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.12148, 0, -22.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.903581, 0.1, -22.4005 )
 
 [node name="Tunis" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.12148, 0, -26.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.35749, 0.1, -26.4005 )
 
 [node name="Cairo" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.87852, 0, -22.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.87852, 0.1, -22.4005 )
 
 [node name="Marocco" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.1215, 0, -23.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.1215, 0.1, -23.3056 )
 
 [node name="Canary Islands" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1215, 0, -23.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0101, 0.1, -23.7621 )
 
 [node name="Egypt" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.87852, 0, -15.1197 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.55181, 0.1, -15.1197 )
 
 [node name="Suakin" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.8785, 0, -11.97 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.6425, 0.1, -11.97 )
 
 [node name="DafFur" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.87852, 0, -7.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.06007, 0.1, -7.46236 )
 
 [node name="Ain -Galaka" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.894239, 0, -11.4315 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2573, 0.1, -11.4315 )
 
 [node name="Bahr el Ghasal" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.87852, 0, -3.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.07639, 0.1, -3.19842 )
 
 [node name="Kadjama" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.12148, 0, 0.599501 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.50177, 0.1, 0.890133 )
 
 [node name="Congo" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.54109, 0, 8.89302 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.54109, 0.1, 9.03124 )
 
 [node name="Ocomba" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.35281, 0, 7.19983 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.46185, 0.1, 7.19983 )
 
 [node name="Darresalam" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8735, 0, 6.67262 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8735, 0.1, 6.67262 )
 
 [node name="Addis Aberba" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2792, 0, -3.96348 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5152, 0.1, -4.13346 )
 
 [node name="Mozanbique" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2792, 0, 13.897 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5195, 0.1, 13.6287 )
 
 [node name="Tamatave" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8255, 0, 16.4106 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6779, 0.1, 16.1599 )
 
 [node name="Cape St Marie" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1527, 0, 23.4436 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9166, 0.1, 23.4436 )
 
 [node name="Dragon Mountian" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1777, 0, 22.0754 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1041, 0.1, 21.8471 )
 
 [node name="Victoria Falls" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.88318, 0, 16.6947 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.68346, 0.1, 16.6947 )
 
 [node name="ST Helena" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3745, 0, 12.9982 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2834, 0.1, 12.9351 )
 
 [node name="Whalefish bay" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.33123, 0, 19.8303 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.74855, 0.1, 19.4587 )
 
 [node name="Cape Town" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.439608, 0, 28.9807 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.403595, 0.1, 29.11 )
 
 [node name="Slave Coast" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.12148, 0, -2.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.28937, 0.1, -2.84614 )
 
 [node name="Gold Coast" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.1215, 0, -3.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.5224, 0.1, -3.4005 )
 
-[node name="Sierra Leon" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1215, 0, -5.4005 )
+[node name="Sierra Leone" parent="Cities" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.879, 0.1, -5.82186 )
 
 [node name="Cape Verde" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.1215, 0, -11.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.6317, 0.1, -11.5444 )
 
 [node name="Timbutu" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1215, 0, -12.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.3389, 0.1, -12.4005 )
 
 [node name="Sahara" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.12148, 0, -18.4005 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.12148, 0.1, -18.199 )
 
 [node name="Lake Victoria" parent="Cities" instance=ExtResource( 4 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8785, 0, 1.5995 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.1808, 0.1, 0.998982 )
 
 [node name="Roads" type="Node" parent="."]
 
 [node name="RoadPoint" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -6.65707, 0, -24.7969 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -6.40284, 0.1, -24.7969 )
 
 [node name="RoadPoint2" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.60627, 0, -23.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.53396, 0.1, -23.698 )
 
 [node name="RoadPoint3" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.6063, 0, -23.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.933, 0.1, -23.6807 )
 
 [node name="RoadPoint4" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -12.6063, 0, -24.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -12.678, 0.1, -24.684 )
 
 [node name="RoadPoint5" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0, -23.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0.1, -23.8389 )
 
 [node name="RoadPoint6" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -13.6063, 0, -22.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -13.3703, 0.1, -22.8389 )
 
 [node name="RoadPoint7" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -11.6063, 0, -21.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -11.8421, 0.1, -21.728 )
 
 [node name="RoadPoint8" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.6063, 0, -19.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.7694, 0.1, -19.8389 )
 
 [node name="RoadPoint45" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -4.60627, 0, -16.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -4.84855, 0.1, -17.2563 )
 
 [node name="RoadPoint46" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.60627, 0, -16.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.49688, 0.1, -16.5741 )
 
 [node name="RoadPoint47" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 6.39373, 0, -16.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 6.68443, 0.1, -17.0151 )
 
 [node name="RoadPoint48" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 4.39373, 0, -17.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 4.7572, 0.1, -17.8389 )
 
 [node name="RoadPoint49" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.39373, 0, -17.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.73926, 0.1, -17.5596 )
 
 [node name="RoadPoint50" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0, -17.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.629835, 0.1, -17.5903 )
 
 [node name="RoadPoint51" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.60627, 0, -18.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.06028, 0.1, -18.9672 )
 
 [node name="RoadPoint52" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -3.60627, 0, -21.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -3.45881, 0.1, -22.0738 )
 
 [node name="RoadPoint53" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -4.60627, 0, -23.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -4.18843, 0.1, -23.5705 )
 
 [node name="RoadPoint9" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0, -20.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0.1, -20.8389 )
 
 [node name="RoadPoint10" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0, -18.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0.1, -18.759 )
 
 [node name="RoadPoint11" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -15.6063, 0, -16.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -16.1934, 0.1, -17 )
 
 [node name="RoadPoint12" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -17.6063, 0, -15.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -17.6973, 0.1, -15.4482 )
 
 [node name="RoadPoint13" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -19.6063, 0, -13.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -19.3667, 0.1, -14.0491 )
 
 [node name="RoadPoint14" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -21.6063, 0, -14.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -21.4606, 0.1, -14.5189 )
 
 [node name="RoadPoint15" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -23.6063, 0, -13.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -23.2973, 0.1, -13.7079 )
 
 [node name="RoadPoint16" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -22.6063, 0, -10.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -22.3154, 0.1, -10.8389 )
 
 [node name="RoadPoint17" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -20.6063, 0, -9.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -20.2794, 0.1, -9.62612 )
 
 [node name="RoadPoint18" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -20.6063, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -20.2431, 0.1, -7.6264 )
 
 [node name="RoadPoint19" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -15.6063, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -16.0058, 0.1, -8.10014 )
 
 [node name="RoadPoint20" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.6063, 0, -9.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -14.2973, 0.1, -9.49841 )
 
 [node name="RoadPoint21" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -17.6063, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -17.6972, 0.1, -7.4677 )
 
 [node name="RoadPoint22" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -19.6063, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -19.6063, 0.1, -5.91959 )
 
 [node name="RoadPoint23" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -15.6063, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -15.6063, 0.1, -6.06622 )
 
 [node name="RoadPoint24" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.60627, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.44282, 0.1, -5.52924 )
 
 [node name="RoadPoint25" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.60627, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.40588, 0.1, -7.35916 )
 
 [node name="RoadPoint26" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -9.60627, 0, -8.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -9.40435, 0.1, -9.01337 )
 
 [node name="RoadPoint27" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.6063, 0, -10.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.7486, 0.1, -10.5198 )
 
 [node name="RoadPoint28" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -5.60627, 0, -3.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -5.60627, 0.1, -3.96754 )
 
 [node name="RoadPoint29" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -3.60627, 0, -3.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -3.55102, 0.1, -4.06232 )
 
 [node name="RoadPoint30" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.60627, 0, -3.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.60627, 0.1, -4.20511 )
+
+[node name="RoadPoint110" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.01128, 0.1, -2.15893 )
 
 [node name="RoadPoint31" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0, -4.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.0669373, 0.1, -5.16464 )
 
 [node name="RoadPoint32" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.39373, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.72068, 0.1, -5.8389 )
 
 [node name="RoadPoint33" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.39373, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.4678, 0.1, -6.07779 )
 
 [node name="RoadPoint84" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.39373, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.39373, 0.1, -7.88597 )
 
 [node name="RoadPoint85" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.39373, 0, -8.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.03047, 0.1, -8.8389 )
 
 [node name="RoadPoint86" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.39373, 0, -9.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.07633, 0.1, -10.2872 )
 
 [node name="RoadPoint34" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0.1, -5.8389 )
 
 [node name="RoadPoint35" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.39373, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.39373, 0.1, -7.8389 )
 
 [node name="RoadPoint36" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 11.3937, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 11.4881, 0.1, -8.40821 )
 
 [node name="RoadPoint37" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 13.3937, 0, -9.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 13.5723, 0.1, -9.54793 )
 
 [node name="RoadPoint38" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.39373, 0, -10.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.44711, 0.1, -10.521 )
 
 [node name="RoadPoint107" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.6586, 0, -17.4258 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.6586, 0.1, -17.4258 )
 
 [node name="RoadPoint108" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.11024, 0, -18.8909 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.11024, 0.1, -18.8909 )
 
 [node name="RoadPoint109" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3825, 0, -20.0038 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3825, 0.1, -20.0038 )
 
 [node name="RoadPoint39" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0, -11.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0.1, -11.8389 )
 
 [node name="RoadPoint40" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 4.39373, 0, -9.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 4.10312, 0.1, -9.64548 )
 
 [node name="RoadPoint41" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.39373, 0, -11.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.39373, 0.1, -11.6535 )
 
 [node name="RoadPoint42" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.39373, 0, -12.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.13719, 0.1, -12.9866 )
 
 [node name="RoadPoint43" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0, -13.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.672135, 0.1, -14.1831 )
 
 [node name="RoadPoint44" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.60627, 0, -15.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.729793, 0.1, -15.4119 )
 
 [node name="RoadPoint54" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.60627, 0, -8.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.27601, 0.1, -9.2152 )
 
 [node name="RoadPoint55" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.60627, 0, -7.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.53472, 0.1, -7.53758 )
 
 [node name="RoadPoint56" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.60627, 0, -5.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.13386, 0.1, -5.8389 )
 
 [node name="RoadPoint57" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.60627, 0, 4.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.22429, 0.1, 4.1611 )
 
 [node name="RoadPoint58" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.60627, 0, 6.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.98862, 0.1, 6.1611 )
 
 [node name="RoadPoint59" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.60627, 0, 10.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.697807, 0.1, 10.0345 )
 
 [node name="RoadPoint60" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.39373, 0, 10.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.24214, 0.1, 9.48542 )
 
 [node name="RoadPoint61" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.39373, 0, 8.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.82956, 0.1, 8.0397 )
 
 [node name="RoadPoint62" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0, 5.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.12131, 0.1, 5.1611 )
 
 [node name="RoadPoint63" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.39373, 0, 3.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.89465, 0.1, 3.40449 )
 
 [node name="RoadPoint64" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3937, 0, 2.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.2831, 0.1, 1.92296 )
 
 [node name="RoadPoint65" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3937, 0, -0.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.539, 0.1, -0.631985 )
 
 [node name="RoadPoint66" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.3937, 0, 4.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.6942, 0.1, 3.62895 )
 
 [node name="RoadPoint96" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.3937, 0, -0.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.9389, 0.1, -1.06179 )
 
 [node name="RoadPoint97" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.3937, 0, -1.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.6483, 0.1, -1.8389 )
 
 [node name="RoadPoint98" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.3937, 0, -6.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.7026, 0.1, -7.15121 )
 
 [node name="RoadPoint99" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.3937, 0, -8.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.0248, 0.1, -9.08112 )
 
 [node name="RoadPoint100" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 20.3937, 0, -4.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 20.7569, 0.1, -4.51931 )
 
 [node name="RoadPoint101" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.3937, 0, -4.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.9213, 0.1, -4.43487 )
 
 [node name="RoadPoint103" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.3937, 0, -0.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.1887, 0.1, -1.26053 )
 
 [node name="RoadPoint104" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 20.3937, 0, 0.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 20.3937, 0.1, 0.00254068 )
 
 [node name="RoadPoint105" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 18.3937, 0, 2.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 18.6782, 0.1, 1.48289 )
 
 [node name="RoadPoint106" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 17.3937, 0, 4.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 17.6237, 0.1, 3.32866 )
 
 [node name="RoadPoint102" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.3937, 2, -2.8389 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 24.0997, 0.1, -2.8389 )
 
 [node name="RoadPoint67" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.3937, 0, 6.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.1697, 0.1, 5.67176 )
 
 [node name="RoadPoint68" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.3937, 0, 8.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.0485, 0.1, 8.1611 )
 
 [node name="RoadPoint69" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.3937, 0, 9.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 15.9215, 0.1, 9.49282 )
 
 [node name="RoadPoint70" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.3937, 0, 11.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.8925, 0.1, 10.8778 )
 
 [node name="RoadPoint71" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.3937, 0, 14.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.4301, 0.1, 14.5603 )
 
 [node name="RoadPoint72" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 13.3937, 0, 16.1611 )
-
-[node name="RoadPoint73" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 12.3937, 0, 17.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 13.1759, 0.1, 16.1611 )
 
 [node name="RoadPoint74" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3937, 0, 16.1611 )
-
-[node name="RoadPoint75" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3937, 0, 16.1611 )
-
-[node name="RoadPoint76" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 11.3937, 0, 15.1611 )
-
-[node name="RoadPoint77" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.39373, 0, 14.1611 )
-
-[node name="RoadPoint78" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.39373, 0, 13.1611 )
-
-[node name="RoadPoint79" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 4.39373, 0, 12.1611 )
-
-[node name="RoadPoint80" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.39373, 0, 12.1611 )
-
-[node name="RoadPoint81" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0, 12.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 21.7316, 0.1, 17.0976 )
 
 [node name="RoadPoint82" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.60627, 0, 12.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 21.8513, 0.1, 19.057 )
+
+[node name="RoadPoint111" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 21.5474, 0.1, 20.911 )
+
+[node name="RoadPoint73" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 12.14, 0.1, 17.3321 )
+
+[node name="RoadPoint75" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.1939, 0.1, 16.3052 )
+
+[node name="RoadPoint76" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.958, 0.1, 15.1611 )
+
+[node name="RoadPoint77" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 9.06672, 0.1, 13.9528 )
+
+[node name="RoadPoint78" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.13306, 0.1, 12.7303 )
+
+[node name="RoadPoint79" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 4.93866, 0.1, 11.9648 )
+
+[node name="RoadPoint80" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 2.66656, 0.1, 11.8148 )
+
+[node name="RoadPoint81" parent="Roads" instance=ExtResource( 6 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0.1, 12.0543 )
 
 [node name="RoadPoint87" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.60627, 0, 18.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.188727, 0.1, 17.7898 )
 
 [node name="RoadPoint88" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.39373, 0, 17.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 1.82967, 0.1, 17.2253 )
 
 [node name="RoadPoint89" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.39373, 0, 17.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.86581, 0.1, 17.273 )
 
 [node name="RoadPoint90" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.60627, 0, 21.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.0425039, 0.1, 21.271 )
 
 [node name="RoadPoint91" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0, 23.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.339978, 0.1, 23.3385 )
 
 [node name="RoadPoint92" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.39373, 0, 25.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.230287, 0.1, 25.4479 )
 
 [node name="RoadPoint93" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.39373, 0, 22.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.0127, 0.1, 22.3573 )
 
 [node name="RoadPoint94" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.39373, 0, 20.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 7.06249, 0.1, 19.954 )
 
 [node name="RoadPoint95" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 11.3937, 0, 19.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 11.3937, 0.1, 19.1611 )
 
 [node name="RoadPoint83" parent="Roads" instance=ExtResource( 6 )]
-transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.60627, 0, 12.1611 )
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -1.73906, 0.1, 11.4493 )
 
 [node name="MainCamera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 45, 0 )
@@ -467,9 +474,13 @@ light_energy = 0.0
 light_indirect_energy = 1.514
 
 [node name="Player" type="Node" parent="."]
-script = ExtResource( 5 )
 
-[node name="Player2" parent="Player" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2908, 0.793472, -14.7263 )
-visible = false
+[node name="PlayerRB" parent="Player" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.51107, 1.47053, -13.4363 )
+collision_layer = 2
+collision_mask = 2
 gravity_scale = 0.0
+
+[node name="MeshInstance" type="MeshInstance" parent="Player/PlayerRB"]
+transform = Transform( 1.01, 0, 0, 0, -4.37114e-08, -1.01, 0, 1, -4.41485e-08, 0, 0, 0 )
+mesh = SubResource( 4 )

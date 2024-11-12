@@ -5,7 +5,7 @@ var target_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	target_position = $Player2.translation
+	target_position = $PlayerRB.translation
 	print("testing" + str(target_position))
 
 
@@ -25,4 +25,4 @@ func _input(event):
 		print("mouseclick: " + str(to))
 		# change target position
 		target_position = to
-		$Player2.translation = target_position
+		$PlayerRB.translation = target_position
