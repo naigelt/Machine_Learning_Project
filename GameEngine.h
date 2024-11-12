@@ -35,9 +35,11 @@ struct Node {
 struct Player {
     int currentNodeId;
     int money = 300;
-    bool hasAfricanStar = false;  // Indicates if the player has the African Star
-    bool hasHorseshoe = false;    // Indicates if the player has a horseshoe
+    bool hasAfricanStar = false;
+    bool hasHorseshoe = false;
+    bool isOnWater = false;  // Tracks if the player is currently on a waterway
 };
+
 
 
 
@@ -48,6 +50,7 @@ public:
     void movePlayer(Player& player, int diceRoll);
     void loadMap();  // Lataa kartta
     void addWaterway(int node1, int node2);
+    std::vector<int> getPathToNode(int startNode, int endNode, int steps);
     
 
     void revealDisk(const Disk& disk, Player& player);  // Julistus kiekon paljastamiseksi

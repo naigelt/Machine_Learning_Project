@@ -261,77 +261,317 @@ void loadGameMap(GameEngine& gameEngine) {
     gameEngine.addWaterway(201, 303);
 
     //Sea route Tangier to Canary Island
-    gameEngine.addWaterway(300, 202);
-    gameEngine.addWaterway(202, 203);
-    gameEngine.addWaterway(203, 305); 
+    gameEngine.addWaterway(300, 275);
+    gameEngine.addWaterway(275, 276);
+    gameEngine.addWaterway(276, 305); 
     
-
-
-
-
     //Cairo
+    gameEngine.addConnection(301, 16);
+    gameEngine.addConnection(16, 17);
+    gameEngine.addConnection(17, 18);
+    gameEngine.addConnection(18, 307); //Egypt Connection
+
+    gameEngine.addWaterway(301, 210);
+    gameEngine.addWaterway(210, 211);
+    gameEngine.addWaterway(211, 212);
+    gameEngine.addWaterway(212, 311); //Suakin Connection
 
     //Tunis
+    gameEngine.addConnection(303, 9);
+    gameEngine.addConnection(9, 10);
+    gameEngine.addConnection(10, 304);
+
+    gameEngine.addWaterway(303, 202);
+    gameEngine.addWaterway(202, 203);
+    gameEngine.addWaterway(203, 304);//Tripoli Connection
+    gameEngine.addWaterway(203, 204);
+    gameEngine.addWaterway(204, 205);
+    gameEngine.addWaterway(205, 301);//Cairo Connection
+
 
     //Tripoli
+    gameEngine.addConnection(304, 11);
+    gameEngine.addConnection(11, 12);
+    gameEngine.addConnection(12, 13);
+    gameEngine.addConnection(13, 14);
+    gameEngine.addConnection(14, 15);
+    gameEngine.addConnection(15, 307);//Egypt Connection
 
-    //Canary Islands
+    //Canary Islands'
+    gameEngine.addWaterway(305, 206);
+    gameEngine.addWaterway(206, 207);
+    gameEngine.addWaterway(207, 208);
+    gameEngine.addWaterway(208, 209);
+    gameEngine.addWaterway(209, 308); //Cape Verde Connection
+
 
     //Morocco
-
+    gameEngine.addConnection(302, 19);
+    gameEngine.addConnection(19, 20);
+    gameEngine.addConnection(20, 21);
+    gameEngine.addConnection(21, 22);
+    gameEngine.addConnection(22, 23);
+    gameEngine.addConnection(23, 24);
+    gameEngine.addConnection(24, 25);
+    gameEngine.addConnection(25, 308); //Cape Verde
+    
     //Sahara
+    gameEngine.addConnection(306, 26);
+    gameEngine.addConnection(26, 27); //Node 27 Sahara Bonus Node
+    gameEngine.addConnection(27, 28);
+    gameEngine.addConnection(28, 29);
+    gameEngine.addConnection(29, 30);
+    gameEngine.addConnection(30, 31);
+    gameEngine.addConnection(31, 32);
+    gameEngine.addConnection(32, 315); //Dar-Fur Connection
 
     //Cape Verde
+    gameEngine.addConnection(308, 38);
+    gameEngine.addConnection(38, 39);
+    gameEngine.addConnection(39, 40);
+    gameEngine.addConnection(40, 312); //Sierra Leone Connection
 
     //Egypt
+    gameEngine.addConnection(307, 33);
+    gameEngine.addConnection(33, 34);
+    gameEngine.addConnection(34, 315); //Dar-Fur Connection
 
     //Suakin
+    gameEngine.addConnection(311, 35);
+    gameEngine.addConnection(35, 36);
+    gameEngine.addConnection(36, 37);
+    gameEngine.addConnection(37, 315);
 
-    //Ajn-Galaka
+    gameEngine.addWaterway(311, 233);
+    gameEngine.addWaterway(233, 234);
+    gameEngine.addWaterway(234, 235);
+    gameEngine.addWaterway(235, 236);
+    gameEngine.addWaterway(236, 318); //Cape Guardafui W-Connection
 
-    //Timbuktu
+    gameEngine.addConnection(311, 63);
+    gameEngine.addConnection(63, 64);
+    gameEngine.addConnection(64, 317); // Addis Abeba connection
+
 
     //Sierra Leone
+    gameEngine.addConnection(312, 41);
+    gameEngine.addConnection(41, 42);
+    gameEngine.addConnection(42, 43);
+    gameEngine.addConnection(43, 44);
+    gameEngine.addConnection(44, 313); //Gold Coast Connection
 
-    //Gold Coast
+    gameEngine.addConnection(43, 45);
+    gameEngine.addConnection(45, 309);//Timbuktu Connection
+
+    gameEngine.addWaterway(308, 213);
+    gameEngine.addWaterway(213, 214);
+    gameEngine.addWaterway(214, 312); //Sierra Leone W-Connection
+
+    gameEngine.addWaterway(213, 215);
+    gameEngine.addWaterway(215, 216);
+    gameEngine.addWaterway(216, 217);
+    gameEngine.addWaterway(217, 218);
+    gameEngine.addWaterway(218, 219);
+    gameEngine.addWaterway(219, 220);
+    gameEngine.addWaterway(220, 221);
+    gameEngine.addWaterway(221, 222); //Node 222 St.Helena Bonus node Norther
+    gameEngine.addWaterway(222, 321); //St.Helena W-Connection
+    
+    gameEngine.addWaterway(312, 223);
+    gameEngine.addWaterway(223, 224);
+    gameEngine.addWaterway(224, 225);
+    gameEngine.addWaterway(225, 226);
+    gameEngine.addWaterway(226, 313); //Gold Coast W-Connection
+
+    //Timbuktu
+    gameEngine.addConnection(309, 46);
+    gameEngine.addConnection(46, 47);
+    gameEngine.addConnection(47, 48);
+    gameEngine.addConnection(48, 49);
+    gameEngine.addConnection(49, 314); //Slave Coast Connection
 
     //Slave Coast
+    gameEngine.addConnection(314, 50);
+    gameEngine.addConnection(50, 51);
+    gameEngine.addConnection(51, 52);
 
-    //Dar-Fur
+    gameEngine.addConnection(52, 53);
+    gameEngine.addConnection(53, 319); //Kandjama Connection
 
-    //Addis Abeba
+    gameEngine.addConnection(52, 54);
+    gameEngine.addConnection(54, 55);
+    gameEngine.addConnection(55, 56);
+    gameEngine.addConnection(56, 310); // Ajn-Galaka Connection
+
+    gameEngine.addConnection(52, 57);
+    gameEngine.addConnection(57, 58);
+    gameEngine.addConnection(58, 59);
+    gameEngine.addConnection(59, 315); //Dar-Fur Connection
+
+    gameEngine.addWaterway(229, 230);
+    gameEngine.addWaterway(230, 231);
+    gameEngine.addWaterway(231, 232);
+    gameEngine.addWaterway(232, 322);
+
+    //Ajn-Galaka
+    gameEngine.addConnection(310, 60);
+    gameEngine.addConnection(60, 61);
+    gameEngine.addConnection(61, 62);
+    gameEngine.addConnection(62, 315);//Dar-Fur Connection
+
+    //Gold Coast
+    gameEngine.addWaterway(313, 227);
+    gameEngine.addWaterway(227, 228);
+    gameEngine.addWaterway(228, 229);
+    gameEngine.addWaterway(229, 314); //Slave Coast W-Connection
 
     //Cape Guardafui
+    gameEngine.addConnection(318, 65);
+    gameEngine.addConnection(65, 66);
+    gameEngine.addConnection(66, 317);
+
+    gameEngine.addConnection(318, 71);
+    gameEngine.addConnection(71, 72);
+    gameEngine.addConnection(72, 73);
+    gameEngine.addConnection(73, 74);
+    gameEngine.addConnection(74, 75);
+    gameEngine.addConnection(75, 324); //Daressalam Connection
+
+    gameEngine.addWaterway(318, 237);
+    gameEngine.addWaterway(237, 238);
+    gameEngine.addWaterway(238, 239);
+    gameEngine.addWaterway(239, 240);
+    gameEngine.addWaterway(240, 241);
+    gameEngine.addWaterway(241, 242);
+    gameEngine.addWaterway(242, 243);
+    gameEngine.addWaterway(243, 328); //Tamatave connection
+
+    gameEngine.addWaterway(318, 244);
+    gameEngine.addWaterway(244, 245);
+    gameEngine.addWaterway(245, 246);
+    gameEngine.addWaterway(246, 247);
+    gameEngine.addWaterway(247, 248);
+    gameEngine.addWaterway(248, 249);
+    gameEngine.addWaterway(249, 250);
+    gameEngine.addWaterway(250, 327); //Mozambique connection
+
+
+    //Addis Abeba
+    gameEngine.addConnection(317, 67);
+    gameEngine.addConnection(67, 68);
+    gameEngine.addConnection(68, 320); //Lake Victoria Connection
+
+    //Dar-Fur
+    gameEngine.addConnection(315, 69);
+    gameEngine.addConnection(69, 316); // Bahr El Ghasal Connection
 
     //Bahr El Ghasal
 
-    //Congo
-
-    //Kandjama
+    gameEngine.addConnection(316, 70);
+    gameEngine.addConnection(70, 320); //Lake Victoria Connection
 
     //Lake Victoria
+    gameEngine.addConnection(320, 76);
+    gameEngine.addConnection(76, 77);
+    gameEngine.addConnection(77, 78);
+    gameEngine.addConnection(78, 79);
+    gameEngine.addConnection(79, 324); //Daressalam connection
 
-    //Daressalam
+    gameEngine.addConnection(79, 80);
+    gameEngine.addConnection(80, 327); //Mozambique Connection
 
-    //Ocomba
+    gameEngine.addConnection(320, 81);
+    gameEngine.addConnection(81, 82);
+    gameEngine.addConnection(82, 83);
+    gameEngine.addConnection(83, 323); // Ocomba Connection
+
+    //Kandjama
+    gameEngine.addConnection(319, 84);
+    gameEngine.addConnection(84, 85);
+    gameEngine.addConnection(85, 322); //Congo connection
+
+    //Congo
+    gameEngine.addConnection(322, 86);
+    gameEngine.addConnection(86, 87);
+    gameEngine.addConnection(87, 88);
+    gameEngine.addConnection(88, 323); //Ocomba Connection
+
+    gameEngine.addConnection(322, 89);
+    gameEngine.addConnection(89, 90);
+    gameEngine.addConnection(90, 91);
+    gameEngine.addConnection(91, 92);
+    gameEngine.addConnection(92, 93);
+    gameEngine.addConnection(93, 94);
+    gameEngine.addConnection(94, 95);
+    gameEngine.addConnection(95, 96);
+    gameEngine.addConnection(96, 97);
+    gameEngine.addConnection(97, 327); //Mozambique Connection
+
+    gameEngine.addConnection(96, 98);
+    gameEngine.addConnection(98, 99);
+    gameEngine.addConnection(99, 326); //Victoria Falls Connection
+
+    gameEngine.addConnection(98, 100);
+    gameEngine.addConnection(100, 329); //Dragon Mountain
 
     //Victoria Falls
+    gameEngine.addConnection(326, 101);
+    gameEngine.addConnection(101, 102);
+    gameEngine.addConnection(102, 103);
+    gameEngine.addConnection(103, 325); //Whalefish Bay Connection
 
-    //Mozambique
-
-    //Tamatave
-
-    //Cape St.Marie
-
-    //Dragon Mountain
-
-    //Capetown
+    gameEngine.addConnection(326, 104);
+    gameEngine.addConnection(104, 105);
+    gameEngine.addConnection(105, 329); //Dragon Mountain Connection
 
     //Whalefish Bay
+    gameEngine.addConnection(325, 106);
+    gameEngine.addConnection(106, 107);
+    gameEngine.addConnection(107, 108);
+    gameEngine.addConnection(108, 331); //Capetown Connection
 
-    //St.Helena
+    gameEngine.addWaterway(325, 271);
+    gameEngine.addWaterway(271, 272);
+    gameEngine.addWaterway(272, 273);
+    gameEngine.addWaterway(273, 274);
+    gameEngine.addWaterway(274, 322); //Congo Connection
+
+    //Tamatave
+    gameEngine.addConnection(328, 109);
+    gameEngine.addConnection(109, 110);
+    gameEngine.addConnection(110, 111);
+    gameEngine.addConnection(111, 330); //Cape St.Marie COnnection
+
+    //Mozambique
+    gameEngine.addWaterway(327, 251);
+    gameEngine.addWaterway(251, 252);
+    gameEngine.addWaterway(252, 330); //Cape St.Marie COnnection
 
 
+    //Cape St.Marie
+    gameEngine.addWaterway(330, 253);
+    gameEngine.addWaterway(253, 254);
+    gameEngine.addWaterway(254, 255);
+    gameEngine.addWaterway(255, 256);
+    gameEngine.addWaterway(256, 257);
+    gameEngine.addWaterway(257, 258);
+    gameEngine.addWaterway(258, 259);
+    gameEngine.addWaterway(259, 331); //Capetown Connection
 
+    //Capetown
+    gameEngine.addWaterway(331, 260);
+    gameEngine.addWaterway(260, 261);
+    gameEngine.addWaterway(261, 262);
+    gameEngine.addWaterway(262, 263);
+    gameEngine.addWaterway(263, 325); //Whalefish connection
+
+    gameEngine.addWaterway(261, 264);
+    gameEngine.addWaterway(264, 265);
+    gameEngine.addWaterway(265, 266);
+    gameEngine.addWaterway(266, 267);
+    gameEngine.addWaterway(267, 268);
+    gameEngine.addWaterway(268, 269);
+    gameEngine.addWaterway(269, 270); //St.Helena Bonus Node South
+    gameEngine.addWaterway(270, 321); // St.Helena Connection
 
 }

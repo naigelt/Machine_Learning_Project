@@ -13,33 +13,39 @@
 GameEngine::GameEngine() : rng(std::random_device{}()), diceDist(1, 6), currentPlayerIndex(0), hasAfricanStar(false) {
     loadMap();  // Load the game map before assigning disks
 
-    
- 
-    static std::vector<Disk> disks = {
+    // Define 30 disks with specified distribution
+    std::vector<Disk> disks = {
         {DiskType::StarOfAfrica, 0},
-        {DiskType::Horseshoe, 0},
-        {DiskType::Robber, 0},
-        {DiskType::Topaz, 300},
-        {DiskType::Emerald, 600},
-        {DiskType::Ruby, 1000}
+        {DiskType::Ruby, 1000}, {DiskType::Ruby, 1000},
+        {DiskType::Emerald, 600}, {DiskType::Emerald, 600}, {DiskType::Emerald, 600},
+        {DiskType::Topaz, 300}, {DiskType::Topaz, 300}, {DiskType::Topaz, 300}, {DiskType::Topaz, 300},
+        {DiskType::Robber, 0}, {DiskType::Robber, 0}, {DiskType::Robber, 0},
+        {DiskType::Horseshoe, 0}, {DiskType::Horseshoe, 0}, {DiskType::Horseshoe, 0},
+        {DiskType::Horseshoe, 0}, {DiskType::Horseshoe, 0},
     };
+
+    // Add 12 Empty disks to make up a total of 30
+    for (int i = 0; i < 12; ++i) {
+        disks.push_back({DiskType::Empty, 0});
+    }
 
     // Shuffle the disks
     std::shuffle(disks.begin(), disks.end(), rng);
 
-    // Assign disks to cities randomly
+    // Assign disks to cities, skipping Tangier and Cairo
     size_t diskIndex = 0;
     for (auto& [name, city] : cities) {
-        if (diskIndex < disks.size()) {
+        if (name != "Tangier" && name != "Cairo" && diskIndex < disks.size()) {
             city.disk = &disks[diskIndex];
             diskIndex++;
         } else {
-            city.disk = nullptr;
+            city.disk = nullptr;  // Ensure no disk in Tangier and Cairo
         }
     }
 
-    players.push_back(Player{100}); 
-    players.push_back(Player{100}); 
+    // Initialize players
+    players.push_back(Player{300}); // Start in Tangier
+    players.push_back(Player{301}); // Start in Cairo
 
     // Display assigned disks for debugging
     std::cout << "Assigned disks to cities:" << std::endl;
@@ -62,8 +68,6 @@ GameEngine::GameEngine() : rng(std::random_device{}()), diceDist(1, 6), currentP
     }
 }
 
-
-
 int GameEngine::rollDice() {
     return diceDist(rng);
 }
@@ -74,12 +78,15 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
     std::cout << "With a roll of " << diceRoll << ", you can reach the following nodes:" << std::endl;
     for (size_t i = 0; i < reachableNodes.size(); ++i) {
         int nodeId = reachableNodes[i];
-        bool isWaterway = waterways.count({player.currentNodeId, nodeId}) > 0;  // Check if the connection is a waterway
+        
+        // Determine if the destination is a waterway or land route
+        bool isWaterway = (nodeId >= 200 && nodeId <= 276) || waterways.count({player.currentNodeId, nodeId}) > 0;
+
         std::cout << i + 1 << ". Node " << nodeId;
         if (isCityNode(nodeId)) {
             std::cout << " (City: " << getCityName(nodeId) << ")";
         }
-        std::cout << " [" << (isWaterway ? "Water" : "Land") << "]" << std::endl;  // Indicate if it’s a waterway
+        std::cout << " [" << (isWaterway ? "Water" : "Land") << "]" << std::endl;
     }
 
     int choice;
@@ -88,17 +95,32 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
 
     if (choice > 0 && choice <= reachableNodes.size()) {
         int selectedDestination = reachableNodes[choice - 1];
-        bool isWaterway = waterways.count({player.currentNodeId, selectedDestination}) > 0;
+        
+        // Determine the path taken from the starting node to the destination
+        std::vector<int> path = getPathToNode(player.currentNodeId, selectedDestination, diceRoll);
 
-        // Check if the route is a waterway and if the player can afford it
-        if (isWaterway) {
+        // Check if the path includes any waterway nodes
+        bool usedWaterRoute = false;
+        for (size_t i = 1; i < path.size(); ++i) {
+            if (waterways.count({path[i-1], path[i]}) > 0) {
+                usedWaterRoute = true;
+                break;
+            }
+        }
+
+        // Deduct £100 if the player used a water route
+        if (usedWaterRoute && !player.isOnWater) {
             if (player.money >= 100) {
                 player.money -= 100;
                 std::cout << "Paid £100 to use the water route. Remaining balance: £" << player.money << "\n";
+                player.isOnWater = true;  // Mark player as being on water
             } else {
-                std::cout << "Not enough money to use the water route. Turn skipped." << std::endl;
+                std::cout << "Not enough money to enter the waterway. Turn skipped." << std::endl;
                 return;  // Exit without moving
             }
+        } else if (!usedWaterRoute) {
+            // Reset `isOnWater` if the player is not using a water route
+            player.isOnWater = false;
         }
 
         // Update player's position
@@ -151,10 +173,10 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
             }
 
             // Check for winning condition
-            if (player.hasAfricanStar && (city.name == "Start1" || city.name == "Start2")) {
+            if (player.hasAfricanStar && (city.name == "Tangier" || city.name == "Cairo")) {
                 std::cout << "Player with the African Star reached " << city.name << " and wins the game!" << std::endl;
                 exit(0);
-            } else if (player.hasHorseshoe && hasAfricanStar && (city.name == "Start1" || city.name == "Start2")) {
+            } else if (player.hasHorseshoe && hasAfricanStar && (city.name == "Tangier" || city.name == "Cairo")) {
                 std::cout << "Player with the horseshoe reached " << city.name << " and wins the game!" << std::endl;
                 exit(0);
             }
@@ -167,12 +189,10 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
 }
 
 
-
 std::vector<int> GameEngine::getReachableNodes(int startNode, int steps) {
     std::vector<int> reachableNodes;
     std::unordered_map<int, int> visited;
     std::queue<std::pair<int, int>> queue;
-    std::set<int> addedCities;
 
     queue.push({startNode, steps});
     visited[startNode] = steps;
@@ -182,27 +202,103 @@ std::vector<int> GameEngine::getReachableNodes(int startNode, int steps) {
         int stepsLeft = queue.front().second;
         queue.pop();
 
+        // If it's a city and within the remaining steps, add it immediately
+        if (isCityNode(currentNode) && stepsLeft >= 0) {
+            reachableNodes.push_back(currentNode);
+        }
+
+        // If there are no steps left, add only the current node
         if (stepsLeft == 0) {
             reachableNodes.push_back(currentNode);
             continue;
         }
 
+        // Explore land connections
         for (int neighbor : nodes[currentNode].neighbors) {
             if (visited.find(neighbor) == visited.end() || visited[neighbor] < stepsLeft - 1) {
                 visited[neighbor] = stepsLeft - 1;
                 queue.push({neighbor, stepsLeft - 1});
             }
         }
-    }
 
-    for (const auto& [name, city] : cities) {
-        if (visited.find(city.nodeId) != visited.end() || city.nodeId == startNode) {
-            reachableNodes.push_back(city.nodeId);
+        // Explore waterway connections
+        for (const auto& connection : waterways) {
+            int waterNeighbor = -1;
+            if (connection.first == currentNode) {
+                waterNeighbor = connection.second;
+            } else if (connection.second == currentNode) {
+                waterNeighbor = connection.first;
+            }
+
+            if (waterNeighbor != -1 && (visited.find(waterNeighbor) == visited.end() || visited[waterNeighbor] < stepsLeft - 1)) {
+                visited[waterNeighbor] = stepsLeft - 1;
+                queue.push({waterNeighbor, stepsLeft - 1});
+            }
         }
     }
 
+    // Remove duplicate nodes and cities from the reachableNodes list
+    std::sort(reachableNodes.begin(), reachableNodes.end());
+    reachableNodes.erase(std::unique(reachableNodes.begin(), reachableNodes.end()), reachableNodes.end());
+
     return reachableNodes;
 }
+
+
+// Function to get the path from startNode to endNode with a limited number of steps
+std::vector<int> GameEngine::getPathToNode(int startNode, int endNode, int steps) {
+    std::unordered_map<int, int> parent;
+    std::queue<std::pair<int, int>> queue;
+    parent[startNode] = -1;
+    queue.push({startNode, steps});
+
+    // Breadth-First Search to find the path
+    while (!queue.empty()) {
+        int currentNode = queue.front().first;
+        int stepsLeft = queue.front().second;
+        queue.pop();
+
+        // If we reach the destination node, construct the path
+        if (currentNode == endNode) {
+            std::vector<int> path;
+            for (int node = endNode; node != -1; node = parent[node]) {
+                path.push_back(node);
+            }
+            std::reverse(path.begin(), path.end());
+            return path;
+        }
+
+        // If no steps are left, skip further exploration
+        if (stepsLeft == 0) continue;
+
+        // Explore neighbors (land connections)
+        for (int neighbor : nodes[currentNode].neighbors) {
+            if (parent.find(neighbor) == parent.end()) {  // Not visited
+                parent[neighbor] = currentNode;
+                queue.push({neighbor, stepsLeft - 1});
+            }
+        }
+
+        // Explore waterways
+        for (const auto& connection : waterways) {
+            int waterNeighbor = -1;
+            if (connection.first == currentNode) {
+                waterNeighbor = connection.second;
+            } else if (connection.second == currentNode) {
+                waterNeighbor = connection.first;
+            }
+
+            if (waterNeighbor != -1 && parent.find(waterNeighbor) == parent.end()) {
+                parent[waterNeighbor] = currentNode;
+                queue.push({waterNeighbor, stepsLeft - 1});
+            }
+        }
+    }
+
+    // If no path is found, return an empty vector
+    return {};
+}
+
 
 bool GameEngine::isCityNode(int nodeId) const {
     for (const auto& [name, city] : cities) {
@@ -240,7 +336,6 @@ void GameEngine::addWaterway(int node1, int node2) {
     waterways.insert({node1, node2});
     waterways.insert({node2, node1});  // Ensure it's bidirectional
 }
-
 
 void GameEngine::loadMap() {
     loadGameMap(*this);
@@ -283,8 +378,6 @@ void GameEngine::revealDisk(const Disk& disk, Player& player) {
     }
     std::cout << "Player's new balance: £" << player.money << std::endl;
 }
-
-
 
 Player& GameEngine::getCurrentPlayer() {
     return players[currentPlayerIndex];
