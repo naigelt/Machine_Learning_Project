@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Graphics/AfricaBoard.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/MainCamera.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/City.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/SeaPoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/RoadPoint.tscn" type="PackedScene" id=6]
 
 [sub_resource type="PlaneMesh" id=1]
@@ -484,3 +485,236 @@ gravity_scale = 0.0
 [node name="MeshInstance" type="MeshInstance" parent="Player/PlayerRB"]
 transform = Transform( 1.01, 0, 0, 0, -4.37114e-08, -1.01, 0, 1, -4.41485e-08, 0, 0, 0 )
 mesh = SubResource( 4 )
+
+[node name="SeaRoads" type="Node" parent="."]
+
+[node name="SeaPoint" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -9.54689, 0.209, -27.804 )
+
+[node name="SeaPoint2" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -7.01891, 0.209089, -27.6595 )
+
+[node name="SeaPoint3" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -0.813633, 0.209089, -25.7068 )
+
+[node name="SeaPoint4" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0.955592, 0.209089, -25.7068 )
+
+[node name="SeaPoint5" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.14878, 0.209089, -25.3178 )
+
+[node name="SeaPoint6" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 5.10917, 0.209089, -24.2507 )
+
+[node name="SeaPoint7" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 12.677, 0.209089, -19.1522 )
+
+[node name="SeaPoint8" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.0996, 0.209089, -17.4008 )
+
+[node name="SeaPoint9" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 15.293, 0.209089, -15.3266 )
+
+[node name="SeaPoint10" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 18.1397, 0.209089, -11.1389 )
+
+[node name="SeaPoint11" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 19.4066, 0.209089, -9.13352 )
+
+[node name="SeaPoint12" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 20.6801, 0.209089, -7.5314 )
+
+[node name="SeaPoint13" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.5451, 0.209089, -6.8489 )
+
+[node name="SeaPoint14" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 25.6242, 0.209089, -1.94097 )
+
+[node name="SeaPoint21" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 27.0299, 0.209089, -1.94097 )
+
+[node name="SeaPoint22" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 27.3111, 0.209089, 0.237888 )
+
+[node name="SeaPoint23" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 27.3111, 0.209089, 2.55732 )
+
+[node name="SeaPoint24" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 27.3111, 0.209089, 5.29846 )
+
+[node name="SeaPoint25" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 27.3111, 0.209089, 7.61789 )
+
+[node name="SeaPoint26" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 26.9596, 0.209089, 10.5699 )
+
+[node name="SeaPoint27" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 26.2568, 0.209089, 13.2864 )
+
+[node name="SeaPoint15" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 25.6242, 0.209089, 0.420705 )
+
+[node name="SeaPoint16" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 24.8194, 0.209089, 2.74619 )
+
+[node name="SeaPoint17" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 24.0319, 0.209089, 4.6603 )
+
+[node name="SeaPoint18" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 22.8617, 0.209089, 6.99577 )
+
+[node name="SeaPoint19" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 21.4406, 0.209089, 9.1466 )
+
+[node name="SeaPoint20" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 19.8878, 0.209089, 11.1569 )
+
+[node name="SeaPoint28" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 17.1466, 0.209089, 17.5986 )
+
+[node name="SeaPoint29" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.9234, 0.209089, 20.5483 )
+
+[node name="SeaPoint30" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 16.537, 0.209089, 26.0874 )
+
+[node name="SeaPoint31" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 14.7335, 0.209089, 27.4615 )
+
+[node name="SeaPoint32" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 12.5007, 0.209089, 28.8355 )
+
+[node name="SeaPoint33" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 10.3967, 0.209089, 29.7499 )
+
+[node name="SeaPoint34" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 8.29355, 0.209089, 30.2986 )
+
+[node name="SeaPoint35" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 5.73324, 0.209089, 30.2986 )
+
+[node name="SeaPoint36" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 3.63013, 0.209089, 30.2986 )
+
+[node name="SeaPoint37" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -2.8621, 0.209089, 28.4698 )
+
+[node name="SeaPoint38" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -4.59946, 0.209089, 27.0982 )
+
+[node name="SeaPoint41" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -7.53807, 0.209089, 27.4639 )
+
+[node name="SeaPoint42" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.8174, 0.209089, 27.4639 )
+
+[node name="SeaPoint43" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -13.8815, 0.209089, 26.0923 )
+
+[node name="SeaPoint44" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -15.4808, 0.209089, 23.7149 )
+
+[node name="SeaPoint45" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -16.5673, 0.209089, 21.246 )
+
+[node name="SeaPoint46" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -17.1267, 0.209089, 18.9708 )
+
+[node name="SeaPoint47" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -17.9048, 0.209089, 16.4571 )
+
+[node name="SeaPoint48" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -21.471, 0.209089, 9.45028 )
+
+[node name="SeaPoint49" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -23.0147, 0.209089, 7.07285 )
+
+[node name="SeaPoint50" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -23.9847, 0.209089, 4.96973 )
+
+[node name="SeaPoint51" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -25.0518, 0.209089, 2.81592 )
+
+[node name="SeaPoint52" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -25.832, 0.209089, 0.365416 )
+
+[node name="SeaPoint53" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.3778, 0.209089, -2.09 )
+
+[node name="SeaPoint54" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.6171, 0.209089, -4.24381 )
+
+[node name="SeaPoint55" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.9688, 0.209089, -6.77509 )
+
+[node name="SeaPoint71" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.9688, 0.209089, -8.55211 )
+
+[node name="SeaPoint72" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.7784, 0.209089, -14.5178 )
+
+[node name="SeaPoint73" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.9688, 0.209089, -16.7391 )
+
+[node name="SeaPoint74" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -26.715, 0.209089, -19.2777 )
+
+[node name="SeaPoint75" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -25.9534, 0.209089, -21.7528 )
+
+[node name="SeaPoint76" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -20.8127, 0.209089, -25.6876 )
+
+[node name="SeaPoint77" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -18.7818, 0.209089, -26.3223 )
+
+[node name="SeaPoint56" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -25.654, 0.209089, -7.35303 )
+
+[node name="SeaPoint57" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -23.0501, 0.209089, -2.85586 )
+
+[node name="SeaPoint58" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -21.4778, 0.209089, -0.877743 )
+
+[node name="SeaPoint59" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -19.3982, 0.209089, -0.370532 )
+
+[node name="SeaPoint60" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -16.9636, 0.209089, -0.776301 )
+
+[node name="SeaPoint61" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -13.3117, 0.209089, -0.471977 )
+
+[node name="SeaPoint62" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -10.6742, 0.209089, 0.694606 )
+
+[node name="SeaPoint63" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.54392, 0.209089, 0.927878 )
+
+[node name="SeaPoint64" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -8.54392, 0.209089, 2.7163 )
+
+[node name="SeaPoint65" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -7.68858, 0.209089, 4.89351 )
+
+[node name="SeaPoint66" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -6.2112, 0.209089, 7.30398 )
+
+[node name="SeaPoint67" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -6.20681, 0.209089, 11.3542 )
+
+[node name="SeaPoint68" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -7.22717, 0.209089, 13.5361 )
+
+[node name="SeaPoint69" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -7.13257, 0.209089, 15.5494 )
+
+[node name="SeaPoint70" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -6.30002, 0.209089, 17.8957 )
+
+[node name="SeaPoint39" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -5.23953, 0.209089, 24.9036 )
+
+[node name="SeaPoint40" parent="SeaRoads" instance=ExtResource( 5 )]
+transform = Transform( 0.6, 0, 0, 0, 0.1, 0, 0, 0, 0.6, -5.30945, 0.209089, 22.6176 )
