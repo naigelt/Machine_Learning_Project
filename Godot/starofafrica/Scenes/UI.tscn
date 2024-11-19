@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Graphics/pinky-dice.fbx" type="PackedScene" id=1]
 
 [node name="UI" type="Control"]
 anchor_right = 1.0
@@ -9,10 +11,21 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Player 1" type="Label" parent="VBoxContainer"]
-margin_right = 40.0
+margin_right = 80.0
 margin_bottom = 14.0
+text = "Items: "
 
 [node name="Money 0" type="Label" parent="VBoxContainer"]
 margin_top = 18.0
-margin_right = 40.0
+margin_right = 80.0
 margin_bottom = 32.0
+text = "Money: 500"
+align = 1
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 80.0
+margin_bottom = 56.0
+text = "Press Dice"
+
+[node name="pinky-dice" parent="VBoxContainer" instance=ExtResource( 1 )]
