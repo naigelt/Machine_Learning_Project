@@ -242,6 +242,33 @@ void loadGameMap(GameEngine& gameEngine) {
 
     // Reittien lisääminen
 
+    //Flight paths
+    gameEngine.addFlightPath("Tangier", "Morocco");
+    gameEngine.addFlightPath("Tangier","Tripoli");
+    gameEngine.addFlightPath("Morocco","Sierra Leone");
+    gameEngine.addFlightPath("Morocco","Gold Coast");
+    gameEngine.addFlightPath("Tripoli","Gold Coast");
+    gameEngine.addFlightPath("Tripoli","Dar-Fur");
+    gameEngine.addFlightPath("Cairo","Suakin");
+    gameEngine.addFlightPath("Suakin","Lake Victoria");
+    gameEngine.addFlightPath("Suakin","Dar-Fur");
+    gameEngine.addFlightPath("Cape Guardafui","Lake Victoria");
+    gameEngine.addFlightPath("Cape Guardafui","Tamatave");
+    gameEngine.addFlightPath("Dar-Fur","Ocomba");
+    gameEngine.addFlightPath("Lake Victoria","Dragon Mountain");
+    gameEngine.addFlightPath("Ocomba","Capetown");
+    gameEngine.addFlightPath("Dragon Mountain","Capetown");
+    gameEngine.addFlightPath("Cape St.Marie","Capetown");
+    gameEngine.addFlightPath("Tamatave","Capetown");
+    gameEngine.addFlightPath("Whalefish Bay","Congo");
+    gameEngine.addFlightPath("Whalefish Bay","Gold Coast");
+    gameEngine.addFlightPath("Congo","Gold Coast");
+    gameEngine.addFlightPath("Capetown","Whalefish Bay");
+    gameEngine.addFlightPath("Capetown","St.Helena");
+    gameEngine.addFlightPath("St.Helena","Sierra Leone");
+ 
+
+
     //Tangier
     gameEngine.addConnection(300, 1);
     gameEngine.addConnection(1, 302); //Morocco Connection
