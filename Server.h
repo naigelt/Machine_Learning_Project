@@ -26,6 +26,7 @@ private:
     SOCKET serverSocket;
     GameEngine& gameEngine;
 
-    void runGameLoop(SOCKET clientSocket); // Declare runGameLoop here
-    void cleanup();
+    void runGameLoop(SOCKET clientSocket); // Handles the gameplay loop
+    void sendClientData(SOCKET clientSocket); // Sends game data to the client
+    void cleanup(); // Cleans up server resources
 };

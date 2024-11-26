@@ -266,14 +266,27 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
         }
     }
 
-    // Display reachable nodes
+        // Display reachable nodes
     std::cout << "With a roll of " << diceRoll << ", you can reach the following nodes:" << std::endl;
     int optionNumber = 1;
     std::unordered_map<int, std::string> optionsMap;
 
     // Show land and water routes
     for (int nodeId : reachableNodes) {
-        bool isWaterway = waterways.count({player.currentNodeId, nodeId}) > 0;
+        // Determine if the route to this node involves a waterway
+        bool isWaterway = false;
+
+        // Get the path to the node
+        std::vector<int> path = getPathToNode(player.currentNodeId, nodeId, diceRoll);
+
+        // Check if any part of the path involves a waterway
+        for (size_t i = 1; i < path.size(); ++i) {
+            if (waterways.count({path[i - 1], path[i]}) > 0) {
+                isWaterway = true;
+                break;
+            }
+        }
+
         std::cout << optionNumber << ". Node " << nodeId;
         if (isCityNode(nodeId)) {
             std::cout << " (City: " << getCityName(nodeId) << ")";
@@ -281,6 +294,8 @@ void GameEngine::movePlayer(Player& player, int diceRoll) {
         std::cout << " [" << (isWaterway ? "Water" : "Land") << "]\n";
         optionsMap[optionNumber++] = "route_" + std::to_string(nodeId);
     }
+
+
 
     // Show flight paths
     for (int nodeId : reachableFlightPaths) {
@@ -548,37 +563,8 @@ int GameEngine::getCurrentPlayerIndex() const {
     return currentPlayerIndex;
 }
 
-nlohmann::json GameEngine::serializeGameState() const {
-    nlohmann::json state;
-
-    state["players"] = nlohmann::json::array();
-    for (const auto& player : players) {
-        state["players"].push_back({
-            {"currentNodeId", player.currentNodeId},
-            {"money", player.money},
-            {"hasAfricanStar", player.hasAfricanStar},
-            {"pendingTurns", player.pendingTurns}
-        });
-    }
-
-    state["cities"] = nlohmann::json::array();
-    for (const auto& [name, city] : cities) {
-        // Debug Output
-        if (city.disk) {
-            std::cout << "Serializing city: " << name 
-                      << ", Disk type: " << static_cast<int>(city.disk->type) 
-                      << ", Memory Address: " << city.disk << std::endl;
-        } else {
-            std::cout << "Serializing city: " << name << ", No disk assigned." << std::endl;
-        }
-
-        // Serialization Logic
-        state["cities"].push_back({
-            {"name", city.name},
-            {"nodeId", city.nodeId},
-            {"diskType", city.disk ? static_cast<int>(city.disk->type) : -1}  // Serialize disk type
-        });
-    }
-
-    return state;
+const std::vector<Disk>& GameEngine::getDisks() const {
+    return disks;
 }
+
+

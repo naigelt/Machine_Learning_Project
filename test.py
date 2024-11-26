@@ -1,30 +1,33 @@
 import socket
 import json
 
-def send_commands():
+def receive_and_display_data():
+    """
+    Connect to the server, receive JSON data, and print it.
+    """
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket.connect(('localhost', 12345))
-    
+    client_socket.connect(('localhost', 12345))  # Adjust the host and port if needed
+
     try:
         while True:
-            # Receive server response
+            # Receive data from the server
             response = client_socket.recv(4096).decode()
-            print("Response from server:", response)
+            if not response:
+                print("Server disconnected.")
+                break
 
-            data = json.loads(response)
-            if "reachableNodes" in data:
-                reachable_nodes = data["reachableNodes"]
-
-                # For now, pick the first option
-                selected_node = reachable_nodes[0]
-                print(f"Selecting node {selected_node} to move.")
-                
-                # Send the move command
-                move_command = f"MOVE_PLAYER {selected_node}"
-                client_socket.sendall(move_command.encode())
+            # Parse and print the JSON data
+            try:
+                data = json.loads(response)
+                print("\n--- Game State Update ---")
+                print(json.dumps(data, indent=4))  # Pretty print JSON data
+                print("\n")
+            except json.JSONDecodeError:
+                print("Received invalid JSON data from the server.")
     except KeyboardInterrupt:
-        print("Exiting...")
+        print("Exiting client...")
     finally:
         client_socket.close()
 
-send_commands()
+if __name__ == "__main__":
+    receive_and_display_data()

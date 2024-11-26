@@ -74,66 +74,86 @@ void Server::start(int port) {
 
 void Server::runGameLoop(SOCKET clientSocket) {
     while (true) {
-        // Lock the game state
-        std::lock_guard<std::mutex> lock(gameMutex);
+        {
+            std::lock_guard<std::mutex> lock(gameMutex);
 
-        Player& currentPlayer = gameEngine.getCurrentPlayer();
-        int currentPlayerIndex = gameEngine.getCurrentPlayerIndex();
+            Player& currentPlayer = gameEngine.getCurrentPlayer();
+            int currentPlayerIndex = gameEngine.getCurrentPlayerIndex();
 
-        // Check if it's the client's turn
-        if (currentPlayerIndex == 0) { // Assuming client is Player 1
-            // Roll the dice and send options
+            // Announce the player's turn
+            std::cout << "\nPlayer " << (currentPlayerIndex + 1) << "'s turn.\n";
+
+            // Roll the dice
             int diceRoll = gameEngine.rollDice();
-            auto reachableNodes = gameEngine.getReachableNodes(currentPlayer.currentNodeId, diceRoll);
+            std::cout << "Rolled a " << diceRoll << ".\n";
 
-            nlohmann::json response;
-            response["diceRoll"] = diceRoll;
-            response["reachableNodes"] = reachableNodes;
+            // Use movePlayer to handle all gameplay logic
+            gameEngine.movePlayer(currentPlayer, diceRoll);
 
-            std::string responseStr = response.dump();
-            send(clientSocket, responseStr.c_str(), responseStr.size(), 0);
+            // Send game state to the client
+            sendClientData(clientSocket);
 
-            // Wait for the client's decision
-            char buffer[1024];
-            int bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0);
-            if (bytesReceived <= 0) {
-                std::cerr << "Client disconnected." << std::endl;
-                break;
-            }
-
-            buffer[bytesReceived] = '\0';
-            std::string command(buffer);
-
-            // Parse the command
-            std::istringstream iss(command);
-            std::string action;
-            int selectedNode;
-            iss >> action >> selectedNode;
-
-            if (action == "MOVE_PLAYER") {
-                if (std::find(reachableNodes.begin(), reachableNodes.end(), selectedNode) != reachableNodes.end()) {
-                    gameEngine.movePlayer(currentPlayer, selectedNode);
-                    std::cout << "Client moved to node " << selectedNode << std::endl;
-                } else {
-                    std::cerr << "Invalid move from client." << std::endl;
-                }
-            }
-        } else {
-            // If it's not the client's turn, continue the game loop normally
-            int diceRoll = gameEngine.rollDice();
-            auto reachableNodes = gameEngine.getReachableNodes(currentPlayer.currentNodeId, diceRoll);
-
-            // Simulate player action for Player 2
-            if (!reachableNodes.empty()) {
-                gameEngine.movePlayer(currentPlayer, reachableNodes[0]);
-                std::cout << "Player 2 moved to node " << reachableNodes[0] << std::endl;
-            }
+            // Switch to the next player's turn
+            gameEngine.nextTurn();
         }
-
-        // End turn and switch to the next player
-        gameEngine.nextTurn();
     }
 }
+
+void Server::sendClientData(SOCKET clientSocket) {
+    nlohmann::json gameState;
+
+    // Add player data
+    for (size_t i = 0; i < gameEngine.players.size(); ++i) {
+        const Player& player = gameEngine.players[i];
+        nlohmann::json playerData = {
+            {"location", player.currentNodeId},
+            {"money", player.money},
+            {"diceroll", player.diceRoll},
+            {"possible moves", (i == gameEngine.getCurrentPlayerIndex()) ?
+                nlohmann::json(gameEngine.getReachableNodes(player.currentNodeId, player.diceRoll)) :
+                nlohmann::json::array()}
+        };
+
+        // Add information about opened disk if applicable
+        if (player.discStatus.first) {
+            playerData["opened disk type"] = static_cast<int>(player.discStatus.second);
+        } else {
+            playerData["opened disk type"] = nullptr;
+        }
+
+        gameState["players"]["player" + std::to_string(i + 1)] = playerData;
+    }
+
+    // Add current player index
+    gameState["current player"] = gameEngine.getCurrentPlayerIndex();
+
+    // Add city discs information
+    for (const auto& [cityName, city] : gameEngine.getCities()) {
+        gameState["city discs"][cityName] = (city.disk != nullptr);
+    }
+
+    // Add remaining discs information
+    std::unordered_map<DiskType, int> remainingDiscs;
+    for (const auto& disk : gameEngine.getDisks()) {
+        if (disk.type != DiskType::Empty) {
+            remainingDiscs[disk.type]++;
+        }
+    }
+
+    for (const auto& [diskType, count] : remainingDiscs) {
+        gameState["remaining discs"].push_back({
+            {"type", static_cast<int>(diskType)},
+            {"count", count}
+        });
+    }
+
+    // Send JSON data to the client
+    std::string gameStateStr = gameState.dump();
+    send(clientSocket, gameStateStr.c_str(), gameStateStr.size(), 0);
+}
+
+
+
 
 void Server::cleanup() {
     #ifdef _WIN32
