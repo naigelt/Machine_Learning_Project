@@ -3,6 +3,10 @@
 #include <iostream>
 #include <sstream>
 #include <thread>
+#include <nlohmann/json.hpp>
+
+// Mutex to synchronize access to shared game state
+std::mutex gameMutex;
 
 Server::Server(GameEngine& engine) : gameEngine(engine) {}
 
@@ -40,59 +44,23 @@ void Server::start(int port) {
 
     std::cout << "Server is running on port " << port << ". Waiting for clients..." << std::endl;
 
-    while (true) {
-        sockaddr_in clientAddr{};
-        socklen_t clientSize = sizeof(clientAddr);
-        SOCKET clientSocket = accept(serverSocket, (sockaddr*)&clientAddr, &clientSize);
+    sockaddr_in clientAddr{};
+    socklen_t clientSize = sizeof(clientAddr);
+    SOCKET clientSocket = accept(serverSocket, (sockaddr*)&clientAddr, &clientSize);
 
-        if (clientSocket == INVALID_SOCKET) {
-            std::cerr << "Accept failed." << std::endl;
-            continue;
-        }
-
-        std::cout << "Client connected." << std::endl;
-
-        std::thread(&Server::handleClient, this, clientSocket).detach();
+    if (clientSocket == INVALID_SOCKET) {
+        std::cerr << "Accept failed." << std::endl;
+        cleanup();
+        return;
     }
 
-    cleanup();
-}
+    std::cout << "Client connected." << std::endl;
 
-std::string Server::handleCommand(const std::string& command) {
-    std::istringstream iss(command);
-    std::string action;
-    iss >> action;
-
-    if (action == "ROLL_DICE") {
-        int diceRoll = gameEngine.rollDice();
-        return "{\"diceRoll\":" + std::to_string(diceRoll) + "}";
-    } else if (action == "MOVE_PLAYER") {
-        int nodeId;
-        iss >> nodeId;
-        Player& currentPlayer = gameEngine.getCurrentPlayer();
-        gameEngine.movePlayer(currentPlayer, nodeId);
-        return "{\"status\":\"Player moved to node " + std::to_string(nodeId) + "\"}";
-    } else {
-        return "{\"error\":\"Unknown command\"}";
-    }
-}
-
-void Server::handleClient(SOCKET clientSocket) {
-    char buffer[1024];
-
-    while (true) {
-        int bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0);
-        if (bytesReceived <= 0) {
-            std::cout << "Client disconnected." << std::endl;
-            break;
-        }
-
-        buffer[bytesReceived] = '\0';
-        std::string command(buffer);
-
-        std::string response = handleCommand(command);
-
-        send(clientSocket, response.c_str(), response.size(), 0);
+    // Run the game loop
+    try {
+        runGameLoop(clientSocket);
+    } catch (const std::exception& ex) {
+        std::cerr << "Error during game loop: " << ex.what() << std::endl;
     }
 
     #ifdef _WIN32
@@ -100,47 +68,72 @@ void Server::handleClient(SOCKET clientSocket) {
     #else
     close(clientSocket);
     #endif
+
+    cleanup();
 }
 
-std::string Server::getGameState() {
-    nlohmann::json state;
+void Server::runGameLoop(SOCKET clientSocket) {
+    while (true) {
+        // Lock the game state
+        std::lock_guard<std::mutex> lock(gameMutex);
 
-    state["players"] = nlohmann::json::array();
-    for (const auto& player : gameEngine.players) {
-        state["players"].push_back({
-            {"currentNodeId", player.currentNodeId},
-            {"money", player.money},
-            {"hasAfricanStar", player.hasAfricanStar},
-            {"pendingTurns", player.pendingTurns}
-        });
+        Player& currentPlayer = gameEngine.getCurrentPlayer();
+        int currentPlayerIndex = gameEngine.getCurrentPlayerIndex();
+
+        // Check if it's the client's turn
+        if (currentPlayerIndex == 0) { // Assuming client is Player 1
+            // Roll the dice and send options
+            int diceRoll = gameEngine.rollDice();
+            auto reachableNodes = gameEngine.getReachableNodes(currentPlayer.currentNodeId, diceRoll);
+
+            nlohmann::json response;
+            response["diceRoll"] = diceRoll;
+            response["reachableNodes"] = reachableNodes;
+
+            std::string responseStr = response.dump();
+            send(clientSocket, responseStr.c_str(), responseStr.size(), 0);
+
+            // Wait for the client's decision
+            char buffer[1024];
+            int bytesReceived = recv(clientSocket, buffer, sizeof(buffer), 0);
+            if (bytesReceived <= 0) {
+                std::cerr << "Client disconnected." << std::endl;
+                break;
+            }
+
+            buffer[bytesReceived] = '\0';
+            std::string command(buffer);
+
+            // Parse the command
+            std::istringstream iss(command);
+            std::string action;
+            int selectedNode;
+            iss >> action >> selectedNode;
+
+            if (action == "MOVE_PLAYER") {
+                if (std::find(reachableNodes.begin(), reachableNodes.end(), selectedNode) != reachableNodes.end()) {
+                    gameEngine.movePlayer(currentPlayer, selectedNode);
+                    std::cout << "Client moved to node " << selectedNode << std::endl;
+                } else {
+                    std::cerr << "Invalid move from client." << std::endl;
+                }
+            }
+        } else {
+            // If it's not the client's turn, continue the game loop normally
+            int diceRoll = gameEngine.rollDice();
+            auto reachableNodes = gameEngine.getReachableNodes(currentPlayer.currentNodeId, diceRoll);
+
+            // Simulate player action for Player 2
+            if (!reachableNodes.empty()) {
+                gameEngine.movePlayer(currentPlayer, reachableNodes[0]);
+                std::cout << "Player 2 moved to node " << reachableNodes[0] << std::endl;
+            }
+        }
+
+        // End turn and switch to the next player
+        gameEngine.nextTurn();
     }
-
-    state["currentPlayerIndex"] = gameEngine.getCurrentPlayerIndex();
-    state["options"] = gameEngine.getReachableNodes(
-        gameEngine.players[gameEngine.getCurrentPlayerIndex()].currentNodeId,
-        gameEngine.rollDice()
-    );
-
-    return state.dump();
 }
-
-std::string Server::applyAction(const std::string& command) {
-    std::istringstream iss(command);
-    int selectedNode;
-    iss >> selectedNode;
-
-    Player& currentPlayer = gameEngine.getCurrentPlayer();
-    auto reachableNodes = gameEngine.getReachableNodes(currentPlayer.currentNodeId, 6); // Max roll for simplicity
-    if (std::find(reachableNodes.begin(), reachableNodes.end(), selectedNode) != reachableNodes.end()) {
-        gameEngine.movePlayer(currentPlayer, selectedNode);
-        // Define a reward mechanism
-        int reward = gameEngine.calculateReward(currentPlayer);
-        return "{\"status\":\"success\",\"reward\":" + std::to_string(reward) + "}";
-    } else {
-        return "{\"status\":\"failure\",\"error\":\"Invalid move\"}";
-    }
-}
-
 
 void Server::cleanup() {
     #ifdef _WIN32

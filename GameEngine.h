@@ -58,6 +58,8 @@ public:
     Player& getCurrentPlayer();  // Returns the current player
     void nextTurn();  // Switches to the next player's turn
     int getCurrentPlayerIndex() const;  // Returns the index of the current player
+    std::vector<Player> players;
+    std::vector<int> getReachableNodes(int startNode, int steps);
 
     friend void loadGameMap(GameEngine& gameEngine);
 
@@ -71,11 +73,11 @@ private:
     std::vector<Disk> disks;  // Keep this as a member of the GameEngine
 
 
-    std::vector<Player> players;  // List of players
+      // List of players
     int currentPlayerIndex;  // Indicates whose turn it is
     bool hasAfricanStar = false;  // True if any player has found the African Star
 
-    std::vector<int> getReachableNodes(int startNode, int steps);
+    
     bool isCityNode(int nodeId) const;
     std::string getCityName(int nodeId) const;
     void addNode(int id);

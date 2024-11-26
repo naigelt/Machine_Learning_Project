@@ -1,6 +1,9 @@
 #pragma once
 
 #include "GameEngine.h"
+#include <string>
+#include <mutex>
+
 #ifdef _WIN32
 #include <winsock2.h>
 #include <ws2tcpip.h>
@@ -13,17 +16,16 @@
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1
 #endif
-#include <string>
 
 class Server {
 public:
     explicit Server(GameEngine& engine);
     void start(int port);
+
 private:
     SOCKET serverSocket;
     GameEngine& gameEngine;
 
-    void handleClient(SOCKET clientSocket);
-    std::string handleCommand(const std::string& command);
+    void runGameLoop(SOCKET clientSocket); // Declare runGameLoop here
     void cleanup();
 };
