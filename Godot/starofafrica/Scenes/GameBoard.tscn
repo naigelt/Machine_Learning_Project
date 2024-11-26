@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Graphics/AfricaBoard.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Scenes/SeaPoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/RoadPoint.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/ServerClient.gd" type="Script" id=8]
+[ext_resource path="res://Scenes/GUIControl.gd" type="Script" id=9]
 
 [sub_resource type="PlaneMesh" id=1]
 
@@ -721,3 +723,7 @@ transform = Transform( 1.01, 0, 0, 0, -4.37114e-08, -1.01, 0, 1, -4.41485e-08, 0
 mesh = SubResource( 4 )
 
 [node name="UI" parent="." instance=ExtResource( 7 )]
+script = ExtResource( 9 )
+
+[node name="ServerClient" type="Node" parent="."]
+script = ExtResource( 8 )
