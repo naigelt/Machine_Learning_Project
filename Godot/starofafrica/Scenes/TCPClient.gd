@@ -44,6 +44,7 @@ func _process(_delta: float) -> void:
 			else:
 				# this should be a JSON that the server sent
 				# parse it somewhere somehow
+				#print("emit signal")
 				emit_signal("data", data[1])
 
 # establish connection

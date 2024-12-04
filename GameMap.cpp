@@ -27,7 +27,7 @@ void loadGameMap(GameEngine& gameEngine) {
     gameEngine.addCity("Lake Victoria", 320);
     gameEngine.addCity("St.Helena", 321);
     gameEngine.addCity("Congo", 322);
-    gameEngine.addCity("Ocomoba", 323);
+    gameEngine.addCity("Ocomba", 323);
     gameEngine.addCity("Daressalam", 324);
     gameEngine.addCity("Whalefish Bay", 325);
     gameEngine.addCity("Victoria Falls", 326);
@@ -280,7 +280,7 @@ void loadGameMap(GameEngine& gameEngine) {
     gameEngine.addConnection(5, 6);
     gameEngine.addConnection(6, 7);
     gameEngine.addConnection(7, 8);
-    gameEngine.addConnection(8, 303); //Tunnis Connection
+    gameEngine.addConnection(8, 303); //Tunis Connection
 
     //Sea Route Tangier to Tunis
     gameEngine.addWaterway(300, 200);

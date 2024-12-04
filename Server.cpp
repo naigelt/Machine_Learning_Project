@@ -73,6 +73,10 @@ void Server::start(int port) {
 }
 
 void Server::runGameLoop(SOCKET clientSocket) {
+
+    // Send game state to the client before first turn
+    sendClientData(clientSocket);
+
     while (true) {
         {
             std::lock_guard<std::mutex> lock(gameMutex);

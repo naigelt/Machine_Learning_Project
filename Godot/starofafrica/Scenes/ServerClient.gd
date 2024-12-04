@@ -21,8 +21,10 @@ func _ready():
 	# this is done using StreamPeerTCP class
 	add_child(_tcp_client)
 	_tcp_client.connect_to_host(address, port)
+	
 
-# another way of joining with NetworkedMultiplayerENet class (both ways obviously not needed
+
+# another way of joining with NetworkedMultiplayerENet class (both ways obviously not needed)
 func join_server():
 	# make the client
 	var serverClient = NetworkedMultiplayerENet.new()
@@ -48,7 +50,19 @@ func connection_failed():
 
 # print received data to console and send acknowledgement "ack" to server
 func _handle_received_data(data: PoolByteArray) -> void:
-	print("Client data: ", data.get_string_from_utf8())
+	#print("Client data: ", data.get_string_from_utf8())
+	
+	#parse data (JSON)
+	#print("parsing json")
+	var jsonData = JSON.parse(data.get_string_from_utf8())
+	
+	if typeof(jsonData.result) == TYPE_DICTIONARY:
+		# do stuff with parsed data here: moved to GlobalThings
+		GlobalThings.handleJSON(jsonData)
+	else:
+		push_error("Unexpected results.")
+	
+	# send "ack" to server
 	var message: PoolByteArray = [97, 99, 107] # "ack" in ASCII
 	var retSend = _tcp_client.send(message)
 	if !retSend:
