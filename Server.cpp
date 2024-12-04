@@ -81,6 +81,7 @@ void Server::runGameLoop(SOCKET clientSocket) {
         {
             std::lock_guard<std::mutex> lock(gameMutex);
 
+            // get current player
             Player& currentPlayer = gameEngine.getCurrentPlayer();
             int currentPlayerIndex = gameEngine.getCurrentPlayerIndex();
 
@@ -89,9 +90,22 @@ void Server::runGameLoop(SOCKET clientSocket) {
 
             // Roll the dice
             int diceRoll = gameEngine.rollDice();
+            currentPlayer.diceRoll = diceRoll;
             std::cout << "Rolled a " << diceRoll << ".\n";
 
             // Use movePlayer to handle all gameplay logic
+            //    -Need to add some sort of message to show on GUI
+            // 
+            //      -Check if player has a pending disk interaction
+            //      -Check if the player is stuck on a special event node
+            //      -Check for the "wait until roll" event
+            //      -Collect reachable flight paths, filtering by player's available money
+            //      -Display reachable nodes
+            //          -add sendClientData to movePlayer() to show available moves on GUI 
+            //      -Ask the player for their choice
+            //          -add some form of asking from GUI
+            //      -Move the player to the selected destination
+            //      -Special Events
             gameEngine.movePlayer(currentPlayer, diceRoll);
 
             // Send game state to the client
@@ -132,8 +146,13 @@ void Server::sendClientData(SOCKET clientSocket) {
     gameState["current player"] = gameEngine.getCurrentPlayerIndex();
 
     // Add city discs information
-    for (const auto& [cityName, city] : gameEngine.getCities()) {
+    /*for (const auto& [cityName, city] : gameEngine.getCities()) {
         gameState["city discs"][cityName] = (city.disk != nullptr);
+    }*/
+
+    // Changed JSON to include nodeIds of cities
+    for (const auto& [cityName, city] : gameEngine.getCities()) {
+        gameState["city discs"][cityName] = { (city.disk != nullptr), city.nodeId };
     }
 
     // Add remaining discs information

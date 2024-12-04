@@ -13,5 +13,5 @@ func _ready():
 
 func _on_Area_input_event(_camera, event, _position, _normal, _shape_idx):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-		print("Clicked a city or a road point: " + name)
+		print("Clicked a city or a road point: " + name + " (NodeId: " + str(nodeId) +  " )")
 		$"../../Player1/PlayerRB".translation = translation + player_offset_vector

@@ -2,63 +2,148 @@ extends Node
 
 ## Globals
 
+# nodeId to gameObject list
+var nodeIds : Array
+
+# Playerbodies (RigidBody)
+var player1RB : RigidBody
+var player2RB : RigidBody
+var currentPlayer : int
+
 # UI label connections for displaying text
 # Player 1
-var player1MoneyText : Label
-var player1WinConditionText : Label
-var player1LastDiceRollText : Label
-
+var p1MoneyLabel : Label
+var p1WinConditionLabel : Label
+var p1LastDiceRollLabel : Label
 # Player 2
-var player2MoneyText : Label
-var player2WinConditionText : Label
-var player2LastDiceRollText : Label
-
-# Board status
-var emptiesLeftText : Label
-var horseshoesLeftText : Label
-var robbersLeftText : Label
-var topazesLeftText : Label
-var emeraldsLeftText : Label
-var rubiesLeftText : Label
-var starFoundText : Label
-
+var p2MoneyLabel : Label
+var p2WinConditionLabel : Label
+var p2LastDiceRollLabel : Label
+# Board Status
+var emptiesLeftLabel : Label
+var horseshoesLeftLabel : Label
+var robbersLeftLabel : Label
+var topazesLeftLabel : Label
+var emeraldsLeftLabel : Label
+var rubiesLeftLabel : Label
+var starFoundLabel : Label
 
 func _ready():
+	var root = get_tree().root
+	
 	# assign variables here
-	pass
+	player1RB = root.get_node("/root/GameBoard/Player1/PlayerRB")
+	player2RB = root.get_node("/root/GameBoard/Player2/PlayerRB")
+	currentPlayer = 1	# initialize as Player 2, so the first turn starts as if turn just changed
+	#print(player1RB.translation)	# test print to check that the right object was grabbed
+	p1MoneyLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/Player1VBoxContainer/Player1Money")
+	p1WinConditionLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/Player1VBoxContainer/Player1WinCondition")
+	p1LastDiceRollLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/Player1VBoxContainer/Player1LastDiceRoll")
+	p2MoneyLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/Player2VBoxContainer/Player2Money")
+	p2WinConditionLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/Player2VBoxContainer/Player2WinCondition")
+	p2LastDiceRollLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/Player2VBoxContainer/Player2LastDiceRoll")
+	emptiesLeftLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Empty")
+	horseshoesLeftLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Horseshoe")
+	robbersLeftLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Robber")
+	topazesLeftLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Topaz")
+	emeraldsLeftLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Emerald")
+	rubiesLeftLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Ruby")
+	starFoundLabel = root.get_node("/root/GameBoard/UI/PlayerInfosHBoxContainer/BoardVBoxContainer/Star")
+	
+	
 
 # function to handle parsed JSON and do appropriate things with the content
-func handleJSON(data : JSONParseResult):
-	print("doing stuff with parsed data")
+func handleJSON(jsonData : JSONParseResult):
+	# just testing if connection works:
+	#print("doing stuff with parsed data")
+	#print(jsonData.result["city discs"])
 	
-	"""
-	GlobalThings.player1Container.get_child(1).text = "Money: " + str(jsonData.result["players"]["player1"]["money"])
-	GlobalThings.player1Container.get_child(3).text = "Latest dice roll: " + str(jsonData.result["players"]["player1"]["diceroll"])
+	# update all the labels in GUI
+	p1MoneyLabel.text = "Money: " + str(jsonData.result["players"]["player1"]["money"])
+	p1LastDiceRollLabel.text = "Latest dice roll: " + str(jsonData.result["players"]["player1"]["diceroll"])
 	
-	GlobalThings.player2Container.get_child(1).text = "Money: " + str(jsonData.result["players"]["player2"]["money"])
-	GlobalThings.player2Container.get_child(3).text = "Latest dice roll: " + str(jsonData.result["players"]["player2"]["diceroll"])
+	p2MoneyLabel.text = "Money: " + str(jsonData.result["players"]["player2"]["money"])
+	p2LastDiceRollLabel.text = "Latest dice roll: " + str(jsonData.result["players"]["player2"]["diceroll"])
 	
-	# JSON arrays retain the order of their elements, so using indices here should be fine
-	var horseshoes = jsonData.result["remaining discs"][3]["count"]
-	var robbers = jsonData.result["remaining discs"][2]["count"]
-	var topazes = jsonData.result["remaining discs"][0]["count"]
-	var emeralds = jsonData.result["remaining discs"][4]["count"]
-	var rubies = jsonData.result["remaining discs"][1]["count"]
-	var star = jsonData.result["remaining discs"][5]["count"]
-	var empties = 30 - (horseshoes + robbers + topazes + emeralds + rubies + star)
-	GlobalThings.boardDataContainer.get_child(1).text = "Empty discs left: " + str(empties)
-	GlobalThings.boardDataContainer.get_child(2).text = "Horseshoes left: " + str(horseshoes)
-	GlobalThings.boardDataContainer.get_child(3).text = "Robbers remaining: " + str(robbers)
-	GlobalThings.boardDataContainer.get_child(4).text = "Topazes remaining: " + str(topazes)
-	GlobalThings.boardDataContainer.get_child(5).text = "Emeralds left: " + str(emeralds)
-	GlobalThings.boardDataContainer.get_child(6).text = "Rubies remaining: " + str(rubies)
-	if star == 0:
-		GlobalThings.boardDataContainer.get_child(7).text = "Star of Africa found"
+	#print(jsonData.result["remaining discs"])	# just for testing to see what "remaining discs" contain. Left here just in case
+	# Types are: Empty = 0, Horseshoe = 1, Robber = 2, Topaz = 3, Emerald = 4, Ruby = 5, StarOfAfrica = 6
+	var empties = 30
+	for discData in jsonData.result["remaining discs"]:
+		match int(discData["type"]):
+			1:
+				horseshoesLeftLabel.text = "Horseshoes left: " + str(discData["count"])
+			2:
+				robbersLeftLabel.text = "Robbers remaining: " + str(discData["count"])
+			3:
+				topazesLeftLabel.text = "Topazes remaining: " + str(discData["count"])
+			4:
+				emeraldsLeftLabel.text = "Emeralds left: " + str(discData["count"])
+			5:
+				rubiesLeftLabel.text = "Rubies remaining: " + str(discData["count"])
+			6:
+				if discData["count"] == 0:
+					starFoundLabel.text = "Star of Africa found"
+				else:
+					starFoundLabel.text = "Star not found yet"
+			_:
+				# for debugging and error handling.
+				# For now only print.
+				print(str(discData["type"]) + " " + str(discData["count"]))
+		empties -= discData["count"]
+	emptiesLeftLabel.text = "Empty discs left: " + str(empties)
+	
+	# move players to their node locations with a helper function
+	move_player_to_node(player1RB, int(jsonData.result["players"]["player1"]["location"]))
+	move_player_to_node(player2RB, int(jsonData.result["players"]["player2"]["location"]))
+	
+	# hide nodes if tuen changed
+	#print(str(jsonData.result["current player"]) + " " + str(currentPlayer))
+	if int(jsonData.result["current player"]) != currentPlayer:
+		hide_all_nodes()
+		currentPlayer = jsonData.result["current player"]
+	
+	# show available nodes (only)
+	if int(jsonData.result["current player"]) == 0:
+		for nodeId in jsonData.result["players"]["player1"]["possible moves"]:
+			show_node(int(nodeId))
 	else:
-		GlobalThings.boardDataContainer.get_child(7).text = "Star not found yet"
+		for nodeId in jsonData.result["players"]["player2"]["possible moves"]:
+			show_node(int(nodeId))
 	
-	"""
+	# hide city discs when they are revealed
+	for city in jsonData.result["city discs"]:
+		if !jsonData.result["city discs"][city][0]:
+			hide_city_disc(int(jsonData.result["city discs"][city][1]))
 
-# move player function?
+# move player function
+func move_player_to_node(var playerRB : RigidBody, var nodeId : int):
+	for nodeObject in nodeIds:
+		if nodeObject[0] == nodeId:
+			playerRB.translation = nodeObject[1].translation + nodeObject[1].player_offset_vector
+			break
 
-# display data function?
+# make available nodes visible
+func show_node(var nodeId : int):
+	for nodeObject in nodeIds:
+		if nodeObject[0] == nodeId:
+			nodeObject[1].get_child(0).visible = true
+			break
+
+# hide all nodes
+func hide_all_nodes():
+	for nodeObject in nodeIds:
+		nodeObject[1].get_child(0).visible = false
+
+# hide city disc when the disc is revealed
+func hide_city_disc(var nodeId : int):
+	for nodeObject in nodeIds:
+		if nodeObject[0] == nodeId:
+			nodeObject[1].get_child(1).visible = false
+
+# separate display data function?
+
+# update nodeIdList after GameBoard has loaded them
+func update_nodeIds():
+	var root = get_tree().root
+	nodeIds = root.get_node("/root/GameBoard").nodeIdArray
+	#print("GlobalThings.nodeIds.size(): " + str(nodeIds.size()))
